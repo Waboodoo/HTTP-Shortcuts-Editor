@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import Category from '@/components/Category.vue';
+import Category from '@/components/categories/Category.vue';
 
 export default {
     components: {
@@ -32,8 +32,3 @@ export default {
     },
 };
 </script>
-
-<style lang="sass" scoped>
-.category-list
-    background: #F0F0F0
-</style>

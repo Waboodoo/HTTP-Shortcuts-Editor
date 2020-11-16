@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import Shortcut from '@/components/Shortcut.vue';
+import Shortcut from '@/components/shortcuts/Shortcut.vue';
 
 export default {
     components: {
@@ -32,8 +32,3 @@ export default {
     },
 };
 </script>
-
-<style lang="sass" scoped>
-.shortcut-list
-    background: #FFFFFF
-</style>
