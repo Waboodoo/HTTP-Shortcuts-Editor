@@ -31,6 +31,7 @@ export default new Vuex.Store({
         password: '',
         data: null,
         isLoading: false,
+        isSaving: false,
         hasUnsavedChanges: false,
     },
     getters: {
@@ -48,6 +49,9 @@ export default new Vuex.Store({
         },
         SET_LOADING(state, isLoading) {
             state.isLoading = isLoading;
+        },
+        SET_SAVING(state, isSaving) {
+            state.isSaving = isSaving;
         },
         SET_DATA(state, data) {
             state.data = data;
@@ -78,14 +82,20 @@ export default new Vuex.Store({
             commit('SET_DATA', data);
             commit('SET_HAS_UNSAVED_CHANGES', true);
         },
-        async saveData({ state }) {
-            const data = await makeApiRequest(
-                state.deviceId,
-                state.password,
-                'post',
-                state.data,
-            );
-            return data.updatedShortcuts;
+        async saveData({ state, commit }) {
+            commit('SET_SAVING', true);
+            try {
+                const data = await makeApiRequest(
+                    state.deviceId,
+                    state.password,
+                    'post',
+                    state.data,
+                );
+                commit('SET_HAS_UNSAVED_CHANGES', false);
+                return data.updatedShortcuts;
+            } finally {
+                commit('SET_SAVING', false);
+            }
         },
     },
 });

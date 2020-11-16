@@ -2,10 +2,19 @@
     <div v-if="data" class="editor">
         <header class="editor__header">
             <div
-                v-if="hasUnsavedChanges"
-                class="editor__header__save"
+                :class="[
+                    'editor__header__save',
+                    {
+                        'editor__header__save--visible': hasUnsavedChanges,
+                        'editor__header__save--disabled': isSaving,
+                    }
+                ]"
                 @click="onSave"
             >Save Changes</div>
+            <span :class="[
+                'editor__header__saving',
+                {'editor__header__saving--visible': isSaving}
+            ]">Saving...</span>
         </header>
         <main class="editor__main">
             <category-list
@@ -27,8 +36,14 @@ export default Vue.extend({
         CategoryList,
     },
     computed: {
-        ...mapState(['data', 'hasUnsavedChanges']),
-        ...mapGetters(['isLoaded']),
+        ...mapState([
+            'data',
+            'hasUnsavedChanges',
+            'isSaving',
+        ]),
+        ...mapGetters([
+            'isLoaded',
+        ]),
     },
     async mounted() {
         if (!this.isLoaded) {
@@ -36,7 +51,11 @@ export default Vue.extend({
         }
     },
     methods: {
-        ...mapActions(['loadData', 'setData', 'saveData']),
+        ...mapActions([
+            'loadData',
+            'setData',
+            'saveData',
+        ]),
         onUpdateCategories(categories) {
             this.setData({
                 ...this.data,
@@ -44,6 +63,9 @@ export default Vue.extend({
             });
         },
         async onSave() {
+            if (!this.hasUnsavedChanges || this.isSaving) {
+                return;
+            }
             /*
             TODO: Validate input
             - Must have at least 1 non-hidden category
@@ -56,7 +78,7 @@ export default Vue.extend({
             } catch (e) {
                 // TODO
                 // eslint-disable-next-line no-alert
-                alert(e);
+                console.log(e);
             }
         },
     },
@@ -78,12 +100,31 @@ export default Vue.extend({
         z-index: 1
 
         &__save
-            cursor: pointer
             padding: 5px 16px
             border-radius: 3px
             background: #ffffff
             color: #0277bd
             margin: 10px
+            opacity: 0
+            transition: opacity ease-in-out 0.2s
+
+            &--visible
+                cursor: pointer
+                opacity: 1
+
+            &--disabled
+                cursor: default
+                color: #666666
+                background: #FAFAFA
+
+        &__saving
+            color: #FFFFFF
+            margin: 10px
+            opacity: 0
+            transition: opacity ease-in-out 0.2s
+
+            &--visible
+                opacity: 1
 
     &__main
         margin-top: 50px
