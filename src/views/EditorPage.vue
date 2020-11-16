@@ -75,6 +75,7 @@ export default Vue.extend({
         right: 0
         width: 100%
         align-items: center
+        z-index: 1
 
         &__save
             cursor: pointer

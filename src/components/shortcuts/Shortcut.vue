@@ -41,6 +41,22 @@
                 label="URL"
                 placeholder="Enter a URL for this shortcut"
             />
+
+            <script-input
+                v-if="usesScriptingBefore"
+                v-model="shortcutData.codeOnPrepare"
+                label="Run before Execution (JavaScript)"
+            />
+            <script-input
+                v-if="usesScriptingOnSuccess"
+                v-model="shortcutData.codeOnSuccess"
+                label="Run after Execution (JavaScript)"
+            />
+            <script-input
+                v-if="usesScriptingOnFailure"
+                v-model="shortcutData.codeOnFailure"
+                label="Run on Failure (JavaScript)"
+            />
             <!--
             TODO:
             - variable placeholders
@@ -59,6 +75,7 @@
 
 <script>
 import Chevron from '@/components/Chevron.vue';
+import ScriptInput from '@/components/form/ScriptInput.vue';
 import SelectInput from '@/components/form/SelectInput.vue';
 import TextInput from '@/components/form/TextInput.vue';
 import { ExecutionType } from '@/model';
@@ -66,6 +83,7 @@ import { ExecutionType } from '@/model';
 export default {
     components: {
         Chevron,
+        ScriptInput,
         SelectInput,
         TextInput,
     },
@@ -103,6 +121,15 @@ export default {
         },
         usesUrl() {
             return this.isRegularShortcut || this.isBrowserShortcut;
+        },
+        usesScriptingBefore() {
+            return this.shortcut.executionType !== ExecutionType.TRIGGER;
+        },
+        usesScriptingOnSuccess() {
+            return this.isRegularShortcut;
+        },
+        usesScriptingOnFailure() {
+            return this.isRegularShortcut;
         },
     },
     methods: {
