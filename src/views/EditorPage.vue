@@ -1,6 +1,6 @@
 <template>
-    <div v-if="data" class="editor">
-        <header class="editor__header">
+    <page v-if="data" class="editor">
+        <template #header class="editor__header">
             <div
                 :class="[
                     'editor__header__save',
@@ -15,14 +15,14 @@
                 'editor__header__saving',
                 {'editor__header__saving--visible': isSaving}
             ]">Saving...</span>
-        </header>
-        <main class="editor__main">
+        </template>
+        <template #main class="editor__main">
             <category-list
                 :categories="data.categories"
                 @update:categories="onUpdateCategories"
             />
-        </main>
-    </div>
+        </template>
+    </page>
 </template>
 
 <script>
@@ -30,10 +30,12 @@ import { mapState, mapActions, mapGetters } from 'vuex';
 
 import Vue from 'vue';
 import CategoryList from '@/components/categories/CategoryList.vue';
+import Page from '@/views/Page.vue';
 
 export default Vue.extend({
     components: {
         CategoryList,
+        Page,
     },
     computed: {
         ...mapState([
@@ -88,17 +90,6 @@ export default Vue.extend({
 <style lang="sass" scoped>
 .editor
     &__header
-        display: flex
-        position: fixed
-        background: #0277BD
-        height: 50px
-        top: 0
-        left: 0
-        right: 0
-        width: 100%
-        align-items: center
-        z-index: 1
-
         &__save
             padding: 5px 16px
             border-radius: 3px
@@ -125,8 +116,4 @@ export default Vue.extend({
 
             &--visible
                 opacity: 1
-
-    &__main
-        margin-top: 50px
-        padding: 10px
 </style>

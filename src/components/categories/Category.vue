@@ -103,7 +103,7 @@ export default {
 .category
     background: #fafafa
     border: 1px solid #CCCCCC
-    margin: 10px 0
+    margin: 10px 0 20px
 
     &__header
         display: flex

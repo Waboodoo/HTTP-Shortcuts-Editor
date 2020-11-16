@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
+const REQUIRED_VERSION = 41;
 const LOCAL_STORAGE_DEVICE_ID = 'device_id';
 const API_PATH = 'api/files/';
 
@@ -24,6 +25,8 @@ async function makeApiRequest(
     }
     throw new Error();
 }
+
+export class ValidationError extends Error {}
 
 export default new Vuex.Store({
     state: {
@@ -72,6 +75,11 @@ export default new Vuex.Store({
                     state.deviceId,
                     state.password,
                 );
+
+                if (data.version !== REQUIRED_VERSION) {
+                    throw new ValidationError('Wrong version');
+                }
+
                 commit('SET_DATA', data);
                 commit('SET_HAS_UNSAVED_CHANGES', false);
             } finally {
