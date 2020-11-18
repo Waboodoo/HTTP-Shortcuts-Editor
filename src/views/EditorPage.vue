@@ -31,6 +31,7 @@ import { mapState, mapActions, mapGetters } from 'vuex';
 import Vue from 'vue';
 import CategoryList from '@/components/categories/CategoryList.vue';
 import Page from '@/views/Page.vue';
+import ValidationError from '@/store/errors/ValidationError';
 
 export default Vue.extend({
     components: {
@@ -68,19 +69,16 @@ export default Vue.extend({
             if (!this.hasUnsavedChanges || this.isSaving) {
                 return;
             }
-            /*
-            TODO: Validate input
-            - Must have at least 1 non-hidden category
-            - Must not have any shortcuts without a name
-            - Must not have any categories without a name
-            - Must not have any regular or browser shortcuts without a valid URl
-             */
             try {
                 await this.saveData();
             } catch (e) {
-                // TODO
-                // eslint-disable-next-line no-alert
-                console.log(e);
+                if (e instanceof ValidationError) {
+                    // eslint-disable-next-line no-alert
+                    alert(e.message);
+                } else {
+                    // eslint-disable-next-line no-alert
+                    alert('An error occurred while trying to save your changes. Please try again.');
+                }
             }
         },
     },

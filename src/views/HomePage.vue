@@ -19,6 +19,7 @@ import { mapState, mapActions } from 'vuex';
 import Vue from 'vue';
 import InitForm from '@/components/InitForm.vue';
 import Page from '@/views/Page.vue';
+import ApiError from '@/store/errors/ApiError';
 
 export default Vue.extend({
     components: {
@@ -41,9 +42,11 @@ export default Vue.extend({
                 await this.loadData();
                 await this.$router.push('/edit');
             } catch (e) {
-                console.log(e);
-                // TODO: Check error and use appropriate error message
-                this.error = 'Failed to open editor';
+                if (e instanceof ApiError) {
+                    this.error = 'Incorrect device ID or password';
+                } else {
+                    this.error = 'Failed to open editor. Please try again';
+                }
             }
         },
         clearError() {

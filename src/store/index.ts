@@ -1,5 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { Base } from '@/model';
+import ValidationError from '@/store/errors/ValidationError';
+import ApiError from '@/store/errors/ApiError';
 
 Vue.use(Vuex);
 
@@ -23,16 +26,31 @@ async function makeApiRequest(
     if (response.ok) {
         return response.json();
     }
-    throw new Error();
+    throw new ApiError();
 }
 
-export class ValidationError extends Error {}
+function validate(data: Base) {
+    if (data.categories.every((category) => category.hidden)) {
+        throw new ValidationError('There must be at least one category which isn\'t hidden.');
+    }
+    if (data.categories.some((category) => category.name.length === 0)) {
+        throw new ValidationError('There must not be any categories without a name.');
+    }
+    if (data.categories.some(
+        (category) => category.shortcuts.some(
+            (shortcut) => shortcut.name.length === 0,
+        ),
+    )) {
+        throw new ValidationError('There must not be any shortcuts without a name.');
+    }
+    // TODO Must not have any regular or browser shortcuts without a valid URL
+}
 
 export default new Vuex.Store({
     state: {
         deviceId: localStorage.getItem(LOCAL_STORAGE_DEVICE_ID) ?? '',
         password: '',
-        data: null,
+        data: null as Base | null,
         isLoading: false,
         isSaving: false,
         hasUnsavedChanges: false,
@@ -77,7 +95,7 @@ export default new Vuex.Store({
                 );
 
                 if (data.version !== REQUIRED_VERSION) {
-                    throw new ValidationError('Wrong version');
+                    throw new ValidationError('The version of the HTTP Shortcuts app is incompatible with this version of the editor.');
                 }
 
                 commit('SET_DATA', data);
@@ -93,6 +111,7 @@ export default new Vuex.Store({
         async saveData({ state, commit }) {
             commit('SET_SAVING', true);
             try {
+                validate(state.data as Base);
                 const data = await makeApiRequest(
                     state.deviceId,
                     state.password,
