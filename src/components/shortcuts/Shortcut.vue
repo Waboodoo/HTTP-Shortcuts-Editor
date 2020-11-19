@@ -5,6 +5,10 @@
         <div class="shortcut__header" @click="toggle">
             <div class="shortcut__header__title">
                 {{ shortcutTitle }}
+                <span
+                    v-if="shortcutTitleSuffix"
+                    class="shortcut__header__title__suffix"
+                >{{ shortcutTitleSuffix }}</span>
             </div>
             <chevron
                 :expanded="expanded"
@@ -307,6 +311,18 @@ export default {
                 ? this.shortcutData.name
                 : '-';
         },
+        shortcutTitleSuffix() {
+            switch (this.shortcut.executionType) {
+            case ExecutionType.BROWSER:
+                return '(Browser Shortcut)';
+            case ExecutionType.TRIGGER:
+                return '(Multi-Shortcut)';
+            case ExecutionType.SCRIPTING:
+                return '(Scripting Shortcut)';
+            default:
+                return null;
+            }
+        },
         isRegularShortcut() {
             return this.shortcutData.executionType === ExecutionType.APP;
         },
@@ -394,6 +410,9 @@ export default {
             font-size: 1.4em
             padding: 15px 20px
             flex: 1 1 auto
+
+            &__suffix
+               color: #CCCCCC
 
         &__chevron
             flex: 0 0 auto

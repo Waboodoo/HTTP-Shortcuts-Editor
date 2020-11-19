@@ -3,6 +3,10 @@
         <div class="category__header" @click="toggle">
             <div class="category__header__title">
                 {{ categoryTitle }}
+                <span
+                    v-if="categoryData.hidden"
+                    class="category__header__title__suffix"
+                >(hidden)</span>
             </div>
             <chevron
                 :expanded="expanded"
@@ -77,12 +81,9 @@ export default {
     },
     computed: {
         categoryTitle() {
-            const name = this.categoryData.name.length > 0
+            return this.categoryData.name.length > 0
                 ? this.categoryData.name
                 : '-';
-            return this.categoryData.hidden
-                ? `${name} (hidden)`
-                : name;
         },
     },
     methods: {
@@ -113,6 +114,9 @@ export default {
             font-size: 2em
             padding: 15px 20px
             flex: 1 1 auto
+
+            &__suffix
+                color: #CCCCCC
 
         &__chevron
             flex: 0 0 auto
