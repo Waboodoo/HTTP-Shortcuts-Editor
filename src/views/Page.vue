@@ -2,6 +2,11 @@
     <div class="page">
         <header class="page__header">
             <slot name="header" />
+            <a
+                href="https://http-shortcuts.rmy.ch/documentation"
+                target="_blank"
+                class="page__header__documentation-link"
+            >Documentation</a>
         </header>
         <main class="page__main">
             <slot name="main" />
@@ -29,6 +34,13 @@ export default Vue.extend({
         width: 100%
         align-items: center
         z-index: 1
+
+        &__documentation-link
+            display: block
+            margin-left: auto
+            padding: 5px 16px
+            color: #fafafa
+            text-decoration: none
 
     &__main
         margin-top: 50px

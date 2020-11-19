@@ -76,4 +76,7 @@ export default Vue.extend({
     width: 100%
     max-width: 400px
     margin: 20px auto
+
+.login-form
+    margin-top: 0
 </style>
