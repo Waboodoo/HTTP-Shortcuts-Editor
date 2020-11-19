@@ -29,6 +29,20 @@ async function makeApiRequest(
     throw new ApiError();
 }
 
+function normalize(data: Base): Base {
+    return {
+        ...data,
+        categories: data.categories.map((category) => ({
+            ...category,
+            shortcuts: category.shortcuts.map((shortcut) => ({
+                ...shortcut,
+                proxyHost: shortcut.proxyHost || null,
+                proxyPort: shortcut.proxyPort || null,
+            })),
+        })),
+    };
+}
+
 function validate(data: Base) {
     if (data.categories.every((category) => category.hidden)) {
         throw new ValidationError('There must be at least one category which isn\'t hidden.');
@@ -98,7 +112,7 @@ export default new Vuex.Store({
                     throw new ValidationError('The version of the HTTP Shortcuts app is incompatible with this version of the editor.');
                 }
 
-                commit('SET_DATA', data);
+                commit('SET_DATA', normalize(data));
                 commit('SET_HAS_UNSAVED_CHANGES', false);
             } finally {
                 commit('SET_LOADING', false);

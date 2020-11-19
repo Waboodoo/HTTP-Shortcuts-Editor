@@ -80,6 +80,8 @@ export interface Shortcut {
     followRedirects: boolean;
     acceptCookies: boolean;
     acceptAllCertificates: boolean;
+    proxyHost: string | null;
+    proxyPort: number | null;
 }
 
 export interface Category {

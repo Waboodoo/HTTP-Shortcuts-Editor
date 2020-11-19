@@ -225,7 +225,25 @@
 
                 <!-- TODO: Timeout -->
 
-                <!-- TODO: Proxy settings -->
+                <text-input
+                    :value="shortcutData.proxyHost || ''"
+                    label="Proxy Hostname / IP Address"
+                    placeholder="Enter the hostname or IP address of an HTTP proxy"
+                    @input="(value) => {
+                        shortcutData.proxyHost = value.length > 0 ? value : null;
+                    }"
+                />
+                <text-input
+                    :value="shortcutData.proxyPort ? `${shortcutData.proxyPort}` : ''"
+                    label="Proxy Port"
+                    placeholder="Enter the port of the HTTP proxy"
+                    type="number"
+                    min="1"
+                    max="65353"
+                    @input="(value) => {
+                        shortcutData.proxyPort = value.length > 0 ? parseInt(value) : null;
+                    }"
+                />
             </form-section>
         </div>
     </div>
