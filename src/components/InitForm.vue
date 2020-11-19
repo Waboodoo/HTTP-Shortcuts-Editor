@@ -62,7 +62,6 @@ export default {
             this.$emit('change');
         },
         onSubmit() {
-            // TODO: Validation
             this.$emit('submit', {
                 deviceId: this.deviceId,
                 password: this.password,

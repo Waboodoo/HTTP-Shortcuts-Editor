@@ -6,6 +6,17 @@ export enum ExecutionType {
     TRIGGER = 'trigger',
 }
 
+export enum HttpMethod {
+    GET = 'GET',
+    POST = 'POST',
+    PUT = 'PUT',
+    DELETE = 'DELETE',
+    PATCH = 'PATCH',
+    HEAD = 'HEAD',
+    OPTIONS = 'OPTIONS',
+    TRACE = 'TRACE',
+}
+
 export enum CategoryLayoutType {
     GRID = 'grid',
     LINEAR_LIST = 'linear_list',
@@ -14,6 +25,11 @@ export enum CategoryLayoutType {
 export interface Shortcut {
     name: string;
     executionType: ExecutionType;
+    method: HttpMethod;
+    url: string;
+    codeOnPrepare: string;
+    codeOnSuccess: string;
+    codeOnFailure: string;
 }
 
 export interface Category {

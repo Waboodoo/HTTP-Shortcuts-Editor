@@ -14,8 +14,8 @@ export default {
 
 <style lang="sass" scoped>
 .chevron
-    background: url('../assets/chevron-right.svg')
+    background: url('../../assets/chevron-right.svg')
 
     &--expanded
-        background: url('../assets/chevron-down.svg')
+        background: url('../../assets/chevron-down.svg')
 </style>

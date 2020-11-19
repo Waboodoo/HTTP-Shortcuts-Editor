@@ -15,6 +15,13 @@
                 'editor__header__saving',
                 {'editor__header__saving--visible': isSaving}
             ]">Saving...</span>
+
+            <a
+                href="https://http-shortcuts.rmy.ch/documentation"
+                target="_blank"
+                class="editor__header__documentation-link"
+            >Documentation</a>
+
         </template>
         <template #main class="editor__main">
             <category-list
@@ -114,4 +121,11 @@ export default Vue.extend({
 
             &--visible
                 opacity: 1
+
+        &__documentation-link
+            display: block
+            margin-left: auto
+            padding: 5px 16px
+            color: #fafafa
+            text-decoration: none
 </style>

@@ -40,7 +40,7 @@
 
 <script>
 import CheckboxInput from '@/components/form/CheckboxInput.vue';
-import Chevron from '@/components/Chevron.vue';
+import Chevron from '@/components/basic/Chevron.vue';
 import Labelled from '@/components/form/Labelled.vue';
 import SelectInput from '@/components/form/SelectInput.vue';
 import ShortcutList from '@/components/shortcuts/ShortcutList.vue';

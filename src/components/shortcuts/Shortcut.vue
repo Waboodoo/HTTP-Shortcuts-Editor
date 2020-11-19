@@ -20,43 +20,48 @@
                 label="Description"
                 placeholder="Enter a description for this shortcut"
             />
-            <select-input
-                v-if="isRegularShortcut"
-                v-model="shortcutData.method"
-                label="Method"
-                :options="[
-                    { value: 'GET', label: 'GET' },
-                    { value: 'POST', label: 'POST' },
-                    { value: 'PUT', label: 'PUT' },
-                    { value: 'DELETE', label: 'DELETE' },
-                    { value: 'PATCH', label: 'PATCH' },
-                    { value: 'HEAD', label: 'HEAD' },
-                    { value: 'OPTIONS', label: 'OPTIONS' },
-                    { value: 'TRACE', label: 'TRACE' },
-                ]"
-            />
-            <text-input
-                v-if="usesUrl"
-                v-model="shortcutData.url"
-                label="URL"
-                placeholder="Enter a URL for this shortcut"
-            />
 
-            <script-input
-                v-if="usesScriptingBefore"
-                v-model="shortcutData.codeOnPrepare"
-                label="Run before Execution (JavaScript)"
-            />
-            <script-input
-                v-if="usesScriptingOnSuccess"
-                v-model="shortcutData.codeOnSuccess"
-                label="Run after Execution (JavaScript)"
-            />
-            <script-input
-                v-if="usesScriptingOnFailure"
-                v-model="shortcutData.codeOnFailure"
-                label="Run on Failure (JavaScript)"
-            />
+            <form-section title="Basic Request Settings">
+                <select-input
+                    v-if="isRegularShortcut"
+                    v-model="shortcutData.method"
+                    label="Method"
+                    :options="[
+                        { value: 'GET', label: 'GET' },
+                        { value: 'POST', label: 'POST' },
+                        { value: 'PUT', label: 'PUT' },
+                        { value: 'DELETE', label: 'DELETE' },
+                        { value: 'PATCH', label: 'PATCH' },
+                        { value: 'HEAD', label: 'HEAD' },
+                        { value: 'OPTIONS', label: 'OPTIONS' },
+                        { value: 'TRACE', label: 'TRACE' },
+                    ]"
+                />
+                <text-input
+                    v-if="usesUrl"
+                    v-model="shortcutData.url"
+                    label="URL"
+                    placeholder="Enter a URL for this shortcut"
+                />
+            </form-section>
+
+            <form-section title="Scripting">
+                <script-input
+                    v-if="usesScriptingBefore"
+                    v-model="shortcutData.codeOnPrepare"
+                    label="Run before Execution (JavaScript)"
+                />
+                <script-input
+                    v-if="usesScriptingOnSuccess"
+                    v-model="shortcutData.codeOnSuccess"
+                    label="Run after Execution (JavaScript)"
+                />
+                <script-input
+                    v-if="usesScriptingOnFailure"
+                    v-model="shortcutData.codeOnFailure"
+                    label="Run on Failure (JavaScript)"
+                />
+            </form-section>
             <!--
             TODO:
             - variable placeholders
@@ -64,7 +69,7 @@
             - request body
             - authentication
             - response handling
-            - scripting
+            - scripting picker
             - misc settings
             - advanced settings
             - trigger shortcuts
@@ -74,7 +79,8 @@
 </template>
 
 <script>
-import Chevron from '@/components/Chevron.vue';
+import Chevron from '@/components/basic/Chevron.vue';
+import FormSection from '@/components/form/FormSection.vue';
 import ScriptInput from '@/components/form/ScriptInput.vue';
 import SelectInput from '@/components/form/SelectInput.vue';
 import TextInput from '@/components/form/TextInput.vue';
@@ -83,6 +89,7 @@ import { ExecutionType } from '@/model';
 export default {
     components: {
         Chevron,
+        FormSection,
         ScriptInput,
         SelectInput,
         TextInput,
