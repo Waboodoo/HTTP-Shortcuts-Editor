@@ -4,6 +4,7 @@
             v-for="shortcut in shortcuts"
             :key="shortcut.id"
             :shortcut="shortcut"
+            class="shortcut-list__item"
             @update:shortcut="onUpdate"
         />
     </div>
@@ -39,4 +40,10 @@ export default {
 <style lang="sass" scoped>
 .empty-state
     color: #4a4a4a
+
+.shortcut-list__item
+    margin: 10px 0 20px
+
+    &:first-child
+        margin-top: 0
 </style>

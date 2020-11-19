@@ -4,6 +4,7 @@
              v-for="category in categories"
              :key="category.id"
              :category="category"
+             class="category-list__item"
              @update:category="onUpdate"
         />
     </div>
@@ -32,3 +33,11 @@ export default {
     },
 };
 </script>
+
+<style lang="sass" scoped>
+.category-list__item
+    margin: 10px 0 20px
+
+    &:first-child
+        margin-top: 0
+</style>

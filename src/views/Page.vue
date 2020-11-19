@@ -32,5 +32,5 @@ export default Vue.extend({
 
     &__main
         margin-top: 50px
-        padding: 10px
+        padding: 20px
 </style>

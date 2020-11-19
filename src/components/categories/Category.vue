@@ -103,7 +103,6 @@ export default {
 .category
     background: #fafafa
     border: 1px solid #CCCCCC
-    margin: 10px 0 20px
 
     &__header
         display: flex
@@ -112,7 +111,7 @@ export default {
 
         &__title
             font-size: 2em
-            padding: 10px
+            padding: 15px 20px
             flex: 1 1 auto
 
         &__chevron
@@ -122,6 +121,6 @@ export default {
             margin: 10px
 
     &__form
-        padding: 0 12px
+        padding: 0 20px
 
 </style>
