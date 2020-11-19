@@ -1,11 +1,14 @@
 <template>
-    <div class="shortcut-list">
+    <div v-if="shortcuts.length > 0" class="shortcut-list">
         <shortcut
             v-for="shortcut in shortcuts"
             :key="shortcut.id"
             :shortcut="shortcut"
             @update:shortcut="onUpdate"
         />
+    </div>
+    <div v-else class="empty-state">
+        This category contains no shortcuts.
     </div>
 </template>
 
@@ -32,3 +35,8 @@ export default {
     },
 };
 </script>
+
+<style lang="sass" scoped>
+.empty-state
+    color: #4a4a4a
+</style>

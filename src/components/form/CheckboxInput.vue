@@ -1,5 +1,5 @@
 <template>
-    <labelled :label="label" v-slot="{ id }">
+    <labelled :label="label" v-slot="{ id }" class="label">
         <input
             :id="id"
             ref="input"
@@ -55,10 +55,15 @@ export default {
     outline: none
     background-color: transparent
     padding: 4px 0
+    float: left
 
     &:focus, &:active
         border-bottom-color: #0277bd
 
     &::placeholder
         color: #666666
+
+.label::v-deep .input__label
+    display: inline-block
+    margin-left: 6px
 </style>

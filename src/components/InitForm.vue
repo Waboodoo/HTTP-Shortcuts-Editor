@@ -1,5 +1,5 @@
 <template>
-    <div class="init-form">
+    <form class="init-form">
         <label for="device-id-input">
             Device ID
         </label>
@@ -7,6 +7,7 @@
             id="device-id-input"
             v-model="deviceId"
             :disabled="isLoading"
+            autocomplete="username"
             @input="onInput"
         >
         <label for="password-input">
@@ -17,6 +18,7 @@
             v-model="password"
             :disabled="isLoading"
             type="password"
+            autocomplete="current-password"
             @input="onInput"
         >
         <button
@@ -25,7 +27,7 @@
         >Start Editing</button>
 
         <span v-if="hasError" class="init-form__error">{{ error }}</span>
-    </div>
+    </form>
 </template>
 
 <script>

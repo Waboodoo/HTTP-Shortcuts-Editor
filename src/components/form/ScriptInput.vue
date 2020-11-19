@@ -3,6 +3,7 @@
         <prism-editor
             class="script-input__editor"
             :value="code"
+            :placeholder="placeholder"
             :highlight="highlighter"
             @input="onInput"
         />

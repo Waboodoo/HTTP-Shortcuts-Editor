@@ -28,6 +28,8 @@
                 :categories="data.categories"
                 @update:categories="onUpdateCategories"
             />
+
+            <!-- TODO: Variables -->
         </template>
     </page>
 </template>
@@ -56,7 +58,9 @@ export default Vue.extend({
         ]),
     },
     async mounted() {
-        if (!this.isLoaded) {
+        if (this.isLoaded) {
+            this.registerOnUnload();
+        } else {
             await this.$router.replace('/');
         }
     },
@@ -66,6 +70,17 @@ export default Vue.extend({
             'setData',
             'saveData',
         ]),
+        registerOnUnload() {
+            window.addEventListener('beforeunload', (e) => {
+                if (!this.hasUnsavedChanges) {
+                    return undefined;
+                }
+                const message = 'You have unsaved changes. '
+                    + 'Are you sure you want to leave and discard them?';
+                e.returnValue = message;
+                return message;
+            });
+        },
         onUpdateCategories(categories) {
             this.setData({
                 ...this.data,

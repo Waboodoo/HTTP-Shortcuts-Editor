@@ -11,6 +11,7 @@
                 v-for="option in options"
                 :key="option.value"
                 :selected="option.value === value"
+                :value="option.value"
             >{{ option.label }}</option>
         </select>
     </labelled>
@@ -51,7 +52,7 @@ export default {
             this.$refs.input.focus();
         },
         onInput(event) {
-            this.$emit('input', event.target.value);
+            this.$emit('input', event.target.options[event.target.selectedIndex].value);
         },
     },
 };
