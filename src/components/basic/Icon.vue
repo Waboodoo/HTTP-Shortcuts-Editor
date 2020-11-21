@@ -15,7 +15,7 @@ export default {
     computed: {
         style() {
             return {
-                'background-image': `url('../../assets/icons/${this.name}.svg')`,
+                'background-image': `url('assets/icons/${this.name}.svg')`,
             };
         },
     },
