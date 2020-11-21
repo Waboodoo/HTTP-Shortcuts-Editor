@@ -17,8 +17,10 @@ You might want to remove [this line](src/router/index.ts#L22) from the router co
 
 ### API Server
 
-The API server is currently just a single PHP file which accepts incoming `GET` and `POST` requests at `/api/files`.
+The API server is currently just [a single PHP](public/api/files/index.php) file which accepts incoming `GET` and `POST` requests at `/api/files`.
 It uses HTTP Basic Auth where the username is the device ID (as shown inside the HTTP Shortcuts app).
+
+If PHP is not your cup of coffee, I understand. I went with it because it was easier for me to host. Feel free to rewrite it in Node or Flask or whatever suits you, there's no magic in it.
 
 ## Acknowledgements
 
