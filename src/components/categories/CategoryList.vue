@@ -1,21 +1,29 @@
 <template>
     <div class="category-list">
-        <category
-             v-for="category in categories"
-             :key="category.id"
-             :category="category"
-             class="category-list__item"
-             @update:category="onUpdate"
-        />
+        <draggable
+            v-model="categoriesData"
+            group="categories"
+            handle=".category__header__drag-handle"
+        >
+            <category
+                 v-for="category in categoriesData"
+                 :key="category.id"
+                 :category="category"
+                 class="category-list__item"
+                 @update:category="onUpdate"
+            />
+        </draggable>
     </div>
 </template>
 
 <script>
 import Category from '@/components/categories/Category.vue';
+import draggable from 'vuedraggable';
 
 export default {
     components: {
         Category,
+        draggable,
     },
     props: {
         categories: {
@@ -23,11 +31,21 @@ export default {
             required: true,
         },
     },
+    data() {
+        return {
+            categoriesData: [...this.categories],
+        };
+    },
+    watch: {
+        categoriesData(newData) {
+            this.$emit('update:categories', newData);
+        },
+    },
     methods: {
         onUpdate(category) {
             this.$emit(
                 'update:categories',
-                this.categories.map((c) => (c.id === category.id ? category : c)),
+                this.categoriesData.map((c) => (c.id === category.id ? category : c)),
             );
         },
     },

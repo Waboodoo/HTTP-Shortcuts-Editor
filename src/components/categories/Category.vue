@@ -1,6 +1,7 @@
 <template>
     <div class="category">
         <div class="category__header" @click="toggle">
+            <div class="category__header__drag-handle" />
             <div class="category__header__title">
                 {{ categoryTitle }}
                 <span
@@ -110,9 +111,21 @@ export default {
         cursor: pointer
         align-items: center
 
+        &__drag-handle
+            width: 24px
+            height: 24px
+            background: url('../../assets/drag-handle.svg')
+            flex: 0 0 auto
+            cursor: move
+            margin: 10px
+            opacity: 0.25
+
+        &:hover &__drag-handle
+            opacity: 1
+
         &__title
             font-size: 2em
-            padding: 15px 20px
+            padding: 15px 0
             flex: 1 1 auto
 
             &__suffix
@@ -123,6 +136,10 @@ export default {
             width: 24px
             height: 24px
             margin: 10px
+            opacity: 0.25
+
+        &:hover &__chevron
+            opacity: 1
 
     &__form
         padding: 0 20px
