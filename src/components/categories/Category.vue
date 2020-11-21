@@ -1,7 +1,7 @@
 <template>
     <div class="category">
         <div class="category__header" @click="toggle">
-            <div class="category__header__drag-handle" />
+            <icon class="category__header__drag-handle" name="drag-handle" />
             <div class="category__header__title">
                 {{ categoryTitle }}
                 <span
@@ -9,6 +9,13 @@
                     class="category__header__title__suffix"
                 >(hidden)</span>
             </div>
+            <icon
+                v-if="allowDeletion"
+                class="category__header__delete-button"
+                name="delete"
+                title="Delete Category"
+                @click.stop="onDeleteClicked"
+            />
             <chevron
                 :expanded="expanded"
                 class="category__header__chevron"
@@ -47,6 +54,7 @@
 import CheckboxInput from '@/components/form/CheckboxInput.vue';
 import Chevron from '@/components/basic/Chevron.vue';
 import Labelled from '@/components/form/Labelled.vue';
+import Icon from '@/components/basic/Icon.vue';
 import SelectInput from '@/components/form/SelectInput.vue';
 import ShortcutList from '@/components/shortcuts/ShortcutList.vue';
 import TextInput from '@/components/form/TextInput.vue';
@@ -56,6 +64,7 @@ export default {
         CheckboxInput,
         Chevron,
         Labelled,
+        Icon,
         SelectInput,
         ShortcutList,
         TextInput,
@@ -64,6 +73,9 @@ export default {
         category: {
             type: Object,
             required: true,
+        },
+        allowDeletion: {
+            type: Boolean,
         },
     },
     data() {
@@ -97,6 +109,12 @@ export default {
         toggle() {
             this.expanded = !this.expanded;
         },
+        onDeleteClicked() {
+            // eslint-disable-next-line no-restricted-globals
+            if (confirm('Delete this category and all its shortcuts?')) {
+                this.$emit('delete', this.categoryData);
+            }
+        },
     },
 };
 </script>
@@ -114,10 +132,9 @@ export default {
         &__drag-handle
             width: 24px
             height: 24px
-            background: url('../../assets/drag-handle.svg')
             flex: 0 0 auto
             cursor: move
-            margin: 10px
+            padding: 10px
             opacity: 0.25
             transition: opacity ease-in-out 300ms
 
@@ -132,15 +149,15 @@ export default {
             &__suffix
                 color: #CCCCCC
 
-        &__chevron
+        &__chevron, &__delete-button
             flex: 0 0 auto
             width: 24px
             height: 24px
-            margin: 10px
+            padding: 10px
             opacity: 0.25
             transition: opacity ease-in-out 300ms
 
-        &:hover &__chevron
+        &:hover &__chevron, &:hover &__delete-button
             opacity: 1
 
     &__form

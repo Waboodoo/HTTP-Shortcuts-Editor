@@ -3,7 +3,7 @@
         <!-- TODO: trigger shortcuts -->
 
         <div class="shortcut__header" @click="toggle">
-            <div class="shortcut__header__drag-handle" />
+            <icon class="shortcut__header__drag-handle" name="drag-handle" />
             <div class="shortcut__header__title">
                 {{ shortcutTitle }}
                 <span
@@ -11,6 +11,18 @@
                     class="shortcut__header__title__suffix"
                 >{{ shortcutTitleSuffix }}</span>
             </div>
+            <icon
+                class="shortcut__header__copy-button"
+                name="copy"
+                title="Duplicate Shortcut"
+                @click.stop="onCopyClicked"
+            />
+            <icon
+                class="shortcut__header__delete-button"
+                name="delete"
+                title="Delete Shortcut"
+                @click.stop="onDeleteClicked"
+            />
             <chevron
                 :expanded="expanded"
                 class="shortcut__header__chevron"
@@ -258,6 +270,7 @@
 import CheckboxInput from '@/components/form/CheckboxInput.vue';
 import Chevron from '@/components/basic/Chevron.vue';
 import FormSection from '@/components/form/FormSection.vue';
+import Icon from '@/components/basic/Icon.vue';
 import ScriptInput from '@/components/form/ScriptInput.vue';
 import SelectInput from '@/components/form/SelectInput.vue';
 import TextInput from '@/components/form/TextInput.vue';
@@ -276,6 +289,7 @@ export default {
         CheckboxInput,
         Chevron,
         FormSection,
+        Icon,
         ScriptInput,
         SelectInput,
         TextInput,
@@ -393,6 +407,15 @@ export default {
         toggle() {
             this.expanded = !this.expanded;
         },
+        onCopyClicked() {
+            this.$emit('copy', this.shortcutData);
+        },
+        onDeleteClicked() {
+            // eslint-disable-next-line no-restricted-globals
+            if (confirm('Delete this shortcut?')) {
+                this.$emit('delete', this.shortcutData);
+            }
+        },
     },
 };
 </script>
@@ -410,10 +433,9 @@ export default {
         &__drag-handle
             width: 24px
             height: 24px
-            background: url('../../assets/drag-handle.svg')
             flex: 0 0 auto
             cursor: move
-            margin: 10px
+            padding: 10px
             opacity: 0.25
             transition: opacity ease-in-out 300ms
 
@@ -428,15 +450,15 @@ export default {
             &__suffix
                color: #CCCCCC
 
-        &__chevron
+        &__chevron, &__copy-button, &__delete-button
             flex: 0 0 auto
             width: 18px
             height: 18px
-            margin: 10px
+            padding: 10px
             opacity: 0.25
             transition: opacity ease-in-out 300ms
 
-        &:hover &__chevron
+        &:hover &__chevron, &:hover &__copy-button, &:hover &__delete-button
             opacity: 1
 
     &__form

@@ -11,6 +11,8 @@
                 :shortcut="shortcut"
                 class="shortcut-list__item"
                 @update:shortcut="onUpdate"
+                @copy="onCopy"
+                @delete="onDelete"
             />
             <template slot="footer">
                 <div v-if="shortcutsData.length === 0" class="empty-state">
@@ -24,6 +26,7 @@
 <script>
 import Shortcut from '@/components/shortcuts/Shortcut.vue';
 import draggable from 'vuedraggable';
+import { cloneShortcut } from '@/model';
 
 export default {
     components: {
@@ -48,10 +51,21 @@ export default {
     },
     methods: {
         onUpdate(shortcut) {
-            this.$emit(
-                'update:shortcuts',
-                this.shortcutsData.map((s) => (s.id === shortcut.id ? shortcut : s)),
+            this.shortcutsData = this.shortcutsData.map(
+                (s) => (s.id === shortcut.id ? shortcut : s),
             );
+        },
+        onCopy(shortcut) {
+            const copy = cloneShortcut(shortcut);
+            copy.name = `${shortcut.name} (copy)`;
+            const index = this.shortcutsData.findIndex((s) => s.id === shortcut.id);
+            if (index === -1) {
+                return;
+            }
+            this.shortcutsData.splice(index + 1, 0, copy);
+        },
+        onDelete(shortcut) {
+            this.shortcutsData = this.shortcutsData.filter((s) => s.id !== shortcut.id);
         },
     },
 };
@@ -60,6 +74,7 @@ export default {
 <style lang="sass" scoped>
 .empty-state
     color: #4a4a4a
+    padding: 5px 0
 
 .shortcut-list__item
     margin: 10px 0 20px

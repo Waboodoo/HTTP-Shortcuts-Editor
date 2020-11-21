@@ -9,8 +9,10 @@
                  v-for="category in categoriesData"
                  :key="category.id"
                  :category="category"
+                 :allow-deletion="categoriesData.length > 1"
                  class="category-list__item"
                  @update:category="onUpdate"
+                 @delete="onDelete"
             />
         </draggable>
     </div>
@@ -43,10 +45,12 @@ export default {
     },
     methods: {
         onUpdate(category) {
-            this.$emit(
-                'update:categories',
-                this.categoriesData.map((c) => (c.id === category.id ? category : c)),
+            this.categoriesData = this.categoriesData.map(
+                (c) => (c.id === category.id ? category : c),
             );
+        },
+        onDelete(category) {
+            this.categoriesData = this.categoriesData.filter((c) => c.id !== category.id);
         },
     },
 };

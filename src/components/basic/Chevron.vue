@@ -1,9 +1,14 @@
 <template>
-    <div :class="['chevron', { 'chevron--expanded': expanded }]"></div>
+    <icon :name="expanded ? 'chevron-down' : 'chevron-right'"/>
 </template>
 
 <script>
+import Icon from '@/components/basic/Icon.vue';
+
 export default {
+    components: {
+        Icon,
+    },
     props: {
         expanded: {
             type: Boolean,
@@ -11,11 +16,3 @@ export default {
     },
 };
 </script>
-
-<style lang="sass" scoped>
-.chevron
-    background: url('../../assets/chevron-right.svg')
-
-    &--expanded
-        background: url('../../assets/chevron-down.svg')
-</style>
