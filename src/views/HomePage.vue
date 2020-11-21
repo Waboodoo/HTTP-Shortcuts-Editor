@@ -58,7 +58,7 @@ export default Vue.extend({
                 await this.$router.push('/edit');
             } catch (e) {
                 if (e instanceof ApiError) {
-                    this.error = 'Incorrect device ID or password';
+                    this.error = 'Incorrect device ID or password, or shortcuts were not pushed from app';
                 } else {
                     this.error = 'Failed to open editor. Please try again';
                 }
