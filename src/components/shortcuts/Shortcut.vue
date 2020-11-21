@@ -415,6 +415,7 @@ export default {
             cursor: move
             margin: 10px
             opacity: 0.25
+            transition: opacity ease-in-out 300ms
 
         &:hover &__drag-handle
             opacity: 1
@@ -433,6 +434,7 @@ export default {
             height: 18px
             margin: 10px
             opacity: 0.25
+            transition: opacity ease-in-out 300ms
 
         &:hover &__chevron
             opacity: 1

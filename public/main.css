@@ -9,3 +9,11 @@ html, body {
 html {
     overflow-y: scroll;
 }
+a {
+    text-decoration: none;
+    color: #0277bd;
+}
+a:hover {
+    text-decoration: none;
+    color: #0277bd;
+}

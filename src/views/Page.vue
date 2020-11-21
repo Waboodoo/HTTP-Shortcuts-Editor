@@ -40,7 +40,6 @@ export default Vue.extend({
             margin-left: auto
             padding: 5px 16px
             color: #fafafa
-            text-decoration: none
 
     &__main
         margin-top: 50px

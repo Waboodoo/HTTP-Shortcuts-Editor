@@ -32,8 +32,4 @@ export default {
 
         &:empty
             display: none
-
-        a
-            text-decoration: none
-            color: #0277bd
 </style>

@@ -22,6 +22,13 @@
                     currently only supports a small subset of the features of the app.
                 </p>
             </notice>
+
+            <notice class="notice">
+                <p>
+                    This web app is also open source. You can host your own.
+                    Find it on <a href="https://github.com/Waboodoo/HTTP-Shortcuts-Editor" target="_blank" rel="noreferrer noopener">Github</a>.
+                </p>
+            </notice>
         </template>
     </page>
 </template>
