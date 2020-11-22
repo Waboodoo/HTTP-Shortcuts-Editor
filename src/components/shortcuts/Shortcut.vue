@@ -214,7 +214,16 @@
                     v-model="shortcutData.requireConfirmation"
                     label="Require confirmation before execution"
                 />
-                <!-- TODO: Delay -->
+                <text-input
+                    :value="`${shortcutData.delay}`"
+                    label="Delay (in milliseconds)"
+                    type="number"
+                    min="0"
+                    max="600000"
+                    @input="(value) => {
+                        shortcutData.delay = parseInt(value);
+                    }"
+                />
             </form-section>
 
             <form-section v-if="isRegularShortcut" title="Advanced Technical Settings">
@@ -239,9 +248,16 @@
                     v-model="shortcutData.acceptAllCertificates"
                     label="Accept any certificate (I know what I'm doing)"
                 />
-
-                <!-- TODO: Timeout -->
-
+                <text-input
+                    :value="`${shortcutData.timeout}`"
+                    label="Timeout (in milliseconds)"
+                    type="number"
+                    min="500"
+                    max="600000"
+                    @input="(value) => {
+                        shortcutData.timeout = parseInt(value);
+                    }"
+                />
                 <text-input
                     :value="shortcutData.proxyHost || ''"
                     label="Proxy Hostname / IP Address"
