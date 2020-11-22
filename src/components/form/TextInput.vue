@@ -1,6 +1,18 @@
 <template>
     <labelled :label="label" v-slot="{ id }">
+        <textarea
+            v-if="multiline"
+            :id="id"
+            ref="input"
+            class="input__value multiline"
+            :value="value"
+            v-bind="$attrs"
+            :placeholder="placeholder"
+            contenteditable
+            @input="onInput"
+        />
         <input
+            v-else
             :id="id"
             ref="input"
             class="input__value"
@@ -34,6 +46,9 @@ export default {
             type: String,
             default: '',
         },
+        multiline: {
+            type: Boolean,
+        },
     },
     data() {
         return {
@@ -66,6 +81,11 @@ export default {
     font-size: 16px
     line-height: 20px
     border-bottom: 1px solid #E0E0E0
+
+    &.multiline
+        resize: vertical
+        height: 150px
+        overflow-y: auto
 
     &:focus, &:active
         border-bottom-color: #0277bd

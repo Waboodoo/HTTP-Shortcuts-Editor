@@ -75,10 +75,45 @@
             </form-section>
 
             <form-section v-if="usesRequestBody" title="Request Body / Parameters">
-                <template slot="header">
-                    Not yet implemented. Coming soon (hopefully)
-                </template>
-                <!-- TODO -->
+                <select-input
+                    v-model="shortcutData.requestBodyType"
+                    label="Request Body Type"
+                    :options="[
+                        {
+                            value: RequestBodyType.FORM_DATA,
+                            label: 'Parameters (form-data)',
+                        },
+                        {
+                            value: RequestBodyType.X_WWW_FORM_URLENCODE,
+                            label: 'Parameters (x-www-form-urlencoded)',
+                        },
+                        {
+                            value: RequestBodyType.CUSTOM_TEXT,
+                            label: 'Custom Text',
+                        },
+                        {
+                            value: RequestBodyType.FILE,
+                            label: 'File (Picker)',
+                        },
+                    ]"
+                />
+                <text-input
+                    v-if="usesCustomTextRequestBody"
+                    v-model="shortcutData.contentType"
+                    label="Content-Type"
+                    placeholder="Enter the type of your request body, e.g. application/json"
+                />
+                <text-input
+                    v-if="usesCustomTextRequestBody"
+                    v-model="shortcutData.bodyContent"
+                    label="Request Body"
+                    placeholder="Enter the request body, e.g., a JSON object"
+                    :multiline="true"
+                />
+                <span v-if="
+                shortcutData.requestBodyType === RequestBodyType.FORM_DATA
+                    || shortcutData.requestBodyType === RequestBodyType.X_WWW_FORM_URLENCODE
+                ">Not supported yet</span>
             </form-section>
 
             <form-section v-if="isRegularShortcut" title="Authentication">
@@ -294,6 +329,7 @@ import {
     AuthenticationMethod,
     ExecutionType,
     HttpMethod,
+    RequestBodyType,
     ResponseHandlingType,
     ResponseHandlingFailureOutputType,
     ResponseHandlingSuccessOutputType,
@@ -322,6 +358,7 @@ export default {
             shortcutData: { ...this.shortcut },
             AuthenticationMethod,
             HttpMethod,
+            RequestBodyType,
             ResponseHandlingType,
             ResponseHandlingFailureOutputType,
             ResponseHandlingSuccessOutputType,
@@ -387,6 +424,12 @@ export default {
                 || method === HttpMethod.DELETE
                 || method === HttpMethod.PATCH
                 || method === HttpMethod.OPTIONS;
+        },
+        usesCustomTextRequestBody() {
+            if (!this.isRegularShortcut) {
+                return false;
+            }
+            return this.shortcutData.requestBodyType === RequestBodyType.CUSTOM_TEXT;
         },
         usesDisplayType() {
             if (!this.isRegularShortcut) {
