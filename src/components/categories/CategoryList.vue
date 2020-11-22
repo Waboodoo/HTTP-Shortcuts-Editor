@@ -15,17 +15,27 @@
                  @delete="onDelete"
             />
         </draggable>
+
+        <styled-button
+            class="category-list__add-button"
+            @click="addNewCategory"
+        >
+            Add New Category
+        </styled-button>
     </div>
 </template>
 
 <script>
 import Category from '@/components/categories/Category.vue';
 import draggable from 'vuedraggable';
+import StyledButton from '@/components/basic/StyledButton.vue';
+import { createNewCategory } from '@/model';
 
 export default {
     components: {
         Category,
         draggable,
+        StyledButton,
     },
     props: {
         categories: {
@@ -52,14 +62,24 @@ export default {
         onDelete(category) {
             this.categoriesData = this.categoriesData.filter((c) => c.id !== category.id);
         },
+        addNewCategory() {
+            this.categoriesData.push(createNewCategory());
+        },
     },
 };
 </script>
 
 <style lang="sass" scoped>
-.category-list__item
-    margin: 10px 0 20px
+.category-list
+    &__item
+        margin: 10px 0 20px
 
-    &:first-child
-        margin-top: 0
+        &:first-child
+            margin-top: 0
+
+        &:last-child
+            margin-bottom: 0
+
+    &__add-button
+        margin: 20px 0
 </style>

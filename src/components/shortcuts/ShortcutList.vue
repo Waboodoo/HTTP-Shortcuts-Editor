@@ -20,18 +20,27 @@
                 </div>
             </template>
         </draggable>
+
+        <styled-button
+            class="shortcut-list__add-button"
+            @click="addNewShortcut"
+        >
+            Add New Shortcut
+        </styled-button>
     </div>
 </template>
 
 <script>
 import Shortcut from '@/components/shortcuts/Shortcut.vue';
 import draggable from 'vuedraggable';
-import { cloneShortcut } from '@/model';
+import StyledButton from '@/components/basic/StyledButton.vue';
+import { cloneShortcut, createNewShortcut } from '@/model';
 
 export default {
     components: {
         Shortcut,
         draggable,
+        StyledButton,
     },
     props: {
         shortcuts: {
@@ -67,6 +76,9 @@ export default {
         onDelete(shortcut) {
             this.shortcutsData = this.shortcutsData.filter((s) => s.id !== shortcut.id);
         },
+        addNewShortcut() {
+            this.shortcutsData.push(createNewShortcut());
+        },
     },
 };
 </script>
@@ -76,9 +88,16 @@ export default {
     color: #4a4a4a
     padding: 5px 0
 
-.shortcut-list__item
-    margin: 10px 0 20px
+.shortcut-list
+    &__item
+        margin: 10px 0 20px
 
-    &:first-child
-        margin-top: 0
+        &:first-child
+            margin-top: 0
+
+        &:last-child
+            margin-bottom: 0
+
+    &__add-button
+        margin: 20px 0
 </style>

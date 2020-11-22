@@ -140,3 +140,49 @@ export function cloneShortcut(shortcut: Shortcut): Shortcut {
         })),
     };
 }
+
+export function createNewShortcut(): Shortcut {
+    return {
+        id: uuidv4(),
+        name: '',
+        executionType: ExecutionType.APP,
+        method: HttpMethod.GET,
+        url: '',
+        authentication: AuthenticationMethod.NONE,
+        username: '',
+        password: '',
+        authToken: '',
+        responseHandling: {
+            id: uuidv4(),
+            uiType: ResponseHandlingType.TOAST,
+            successOutput: ResponseHandlingSuccessOutputType.RESPONSE,
+            failureOutput: ResponseHandlingFailureOutputType.DETAILED,
+            successMessage: '',
+            includeMetaInfo: false,
+        },
+        codeOnPrepare: '',
+        codeOnSuccess: '',
+        codeOnFailure: '',
+        launcherShortcut: false,
+        quickSettingsTileShortcut: false,
+        requireConfirmation: false,
+        retryPolicy: RetryPolicy.NONE,
+        followRedirects: true,
+        acceptCookies: true,
+        acceptAllCertificates: false,
+        proxyHost: null,
+        proxyPort: null,
+        parameters: [],
+        headers: [],
+    };
+}
+
+export function createNewCategory(): Category {
+    return {
+        id: uuidv4(),
+        name: '',
+        shortcuts: [],
+        hidden: false,
+        layoutType: CategoryLayoutType.LINEAR_LIST,
+    };
+}
