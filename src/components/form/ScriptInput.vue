@@ -19,7 +19,7 @@ import 'vue-prism-editor/dist/prismeditor.min.css';
 import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
-import 'prismjs/themes/prism-tomorrow.css';
+import 'prismjs/themes/prism-coy.css';
 
 export default {
     components: {
@@ -67,8 +67,8 @@ export default {
 <style lang="sass" scoped>
 .script-input__editor
     height: 250px
-    background: #2d2d2d
-    color: #cccccc
+    background: #fafafa
+    color: #2d2d2d
     font-family: Fira code, Fira Mono, Consolas, Menlo, Courier, monospace
     font-size: 14px
     line-height: 1.5

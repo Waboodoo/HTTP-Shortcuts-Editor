@@ -3,6 +3,10 @@ import Vuex from 'vuex';
 import { Base } from '@/model';
 import ValidationError from '@/store/errors/ValidationError';
 import ApiError from '@/store/errors/ApiError';
+import {
+    replaceVariableKeysWithPlaceholders,
+    replaceVariablePlaceholdersWithKeys,
+} from '@/store/variables';
 
 Vue.use(Vuex);
 
@@ -112,7 +116,7 @@ export default new Vuex.Store({
                     throw new ValidationError('The version of the HTTP Shortcuts app is incompatible with this version of the editor.');
                 }
 
-                commit('SET_DATA', normalize(data));
+                commit('SET_DATA', replaceVariablePlaceholdersWithKeys(normalize(data)));
                 commit('SET_HAS_UNSAVED_CHANGES', false);
             } finally {
                 commit('SET_LOADING', false);
@@ -125,12 +129,13 @@ export default new Vuex.Store({
         async saveData({ state, commit }) {
             commit('SET_SAVING', true);
             try {
-                validate(state.data as Base);
+                const base = state.data as Base;
+                validate(base);
                 const data = await makeApiRequest(
                     state.deviceId,
                     state.password,
                     'post',
-                    state.data,
+                    replaceVariableKeysWithPlaceholders(base),
                 );
                 commit('SET_HAS_UNSAVED_CHANGES', false);
                 return data.updatedShortcuts;

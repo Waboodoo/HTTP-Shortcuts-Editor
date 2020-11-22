@@ -68,6 +68,7 @@ export default Vue.extend({
                     this.error = 'Incorrect device ID or password, or shortcuts were not pushed from app';
                 } else {
                     this.error = 'Failed to open editor. Please try again';
+                    console.log(e);
                 }
             }
         },

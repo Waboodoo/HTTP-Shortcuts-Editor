@@ -63,27 +63,37 @@ export interface ResponseHandling {
     includeMetaInfo: boolean;
 }
 
-export interface Parameter {
-    id: string;
-}
-
-export enum HeaderType {
+export enum ParameterType {
     STRING = 'string',
     FILE = 'file',
     FILES = 'files',
+}
+
+export interface Parameter {
+    id: string;
+    key: string;
+    value: string;
+    type: ParameterType;
+    fileName: string;
 }
 
 export interface Header {
     id: string;
     key: string;
     value: string;
-    type: HeaderType;
-    fileName: string;
+}
+
+export enum RequestBodyType {
+    FORM_DATA = 'form_data',
+    X_WWW_FORM_URLENCODE = 'x_www_form_urlencode',
+    CUSTOM_TEXT = 'custom_text',
+    FILE = 'file',
 }
 
 export interface Shortcut {
     id: string;
     name: string;
+    iconName: string | null;
     executionType: ExecutionType;
     method: HttpMethod;
     url: string;
@@ -91,6 +101,9 @@ export interface Shortcut {
     username: string;
     password: string;
     authToken: string;
+    contentType: string;
+    bodyContent: string;
+    requestBodyType: RequestBodyType;
     responseHandling: ResponseHandling | null;
     codeOnPrepare: string;
     codeOnSuccess: string;
@@ -105,7 +118,7 @@ export interface Shortcut {
     proxyHost: string | null;
     proxyPort: number | null;
     parameters: Parameter[];
-    headers: Headers[];
+    headers: Header[];
 }
 
 export interface Category {
@@ -116,10 +129,43 @@ export interface Category {
     layoutType: CategoryLayoutType;
 }
 
+export enum VariableType {
+    CONSTANT = 'constant',
+    TEXT = 'text',
+    NUMBER = 'number',
+    PASSWORD = 'password',
+    SELECT = 'select',
+    TOGGLE = 'toggle',
+    COLOR = 'color',
+    DATE = 'date',
+    TIME = 'time',
+    SLIDER = 'slider',
+}
+
+export interface VariableOption {
+    id: string;
+    label: string;
+    value: string;
+}
+
+export interface Variable {
+    id: string;
+    key: string;
+    type: VariableType;
+    value: string | null;
+    options: VariableOption[] | null;
+    rememberValue: boolean;
+    urlEncode: boolean;
+    jsonEncode: boolean;
+    data: string | null;
+    flags: number;
+    title: string;
+}
+
 export interface Base {
     categories: Category[];
     version: number;
-    // TODO: Variables
+    variables: Variable[];
 }
 
 export function cloneShortcut(shortcut: Shortcut): Shortcut {
@@ -145,6 +191,7 @@ export function createNewShortcut(): Shortcut {
     return {
         id: uuidv4(),
         name: '',
+        iconName: 'flat_color_lightbulb',
         executionType: ExecutionType.APP,
         method: HttpMethod.GET,
         url: '',
@@ -160,6 +207,9 @@ export function createNewShortcut(): Shortcut {
             successMessage: '',
             includeMetaInfo: false,
         },
+        contentType: '',
+        bodyContent: '',
+        requestBodyType: RequestBodyType.CUSTOM_TEXT,
         codeOnPrepare: '',
         codeOnSuccess: '',
         codeOnFailure: '',

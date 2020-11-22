@@ -99,5 +99,5 @@ export default {
             margin-bottom: 0
 
     &__add-button
-        margin: 20px 0
+        margin-top: 20px
 </style>
