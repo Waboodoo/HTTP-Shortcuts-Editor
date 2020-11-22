@@ -202,13 +202,12 @@
                 />
             </form-section>
 
-            <form-section title="Scripting">
+            <form-section v-if="usesScripting" title="Scripting">
                 <template slot="header">
                     See the <a href="https://http-shortcuts.rmy.ch/scripting" target="_blank">Scripting documentation</a> for more information.
                 </template>
                 <template>
                     <script-input
-                        v-if="usesScriptingBefore"
                         v-model="shortcutData.codeOnPrepare"
                         label="Run before Execution"
                         :placeholder="
@@ -233,7 +232,6 @@
                     />
                 </template>
                 <!-- TODO: Code Snippet Picker -->
-                <!-- TODO: Replace variables with their names -->
             </form-section>
 
             <form-section title="Misc Settings">
@@ -448,7 +446,7 @@ export default {
             const { responseHandling } = this.shortcutData;
             return responseHandling.successOutput === ResponseHandlingSuccessOutputType.MESSAGE;
         },
-        usesScriptingBefore() {
+        usesScripting() {
             return this.shortcutData.executionType !== ExecutionType.TRIGGER;
         },
         usesScriptingOnSuccess() {

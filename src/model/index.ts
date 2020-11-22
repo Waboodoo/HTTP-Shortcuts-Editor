@@ -187,26 +187,26 @@ export function cloneShortcut(shortcut: Shortcut): Shortcut {
     };
 }
 
-export function createNewShortcut(): Shortcut {
+export function createNewShortcut(type: ExecutionType): Shortcut {
     return {
         id: uuidv4(),
         name: '',
         iconName: 'flat_color_lightbulb',
-        executionType: ExecutionType.APP,
+        executionType: type,
         method: HttpMethod.GET,
         url: '',
         authentication: AuthenticationMethod.NONE,
         username: '',
         password: '',
         authToken: '',
-        responseHandling: {
+        responseHandling: type === ExecutionType.APP ? {
             id: uuidv4(),
             uiType: ResponseHandlingType.TOAST,
             successOutput: ResponseHandlingSuccessOutputType.RESPONSE,
             failureOutput: ResponseHandlingFailureOutputType.DETAILED,
             successMessage: '',
             includeMetaInfo: false,
-        },
+        } : null,
         contentType: '',
         bodyContent: '',
         requestBodyType: RequestBodyType.CUSTOM_TEXT,
