@@ -109,10 +109,15 @@ export default {
         toggle() {
             this.expanded = !this.expanded;
         },
-        onDeleteClicked() {
-            // eslint-disable-next-line no-restricted-globals
-            if (confirm('Delete this category and all its shortcuts?')) {
+        async onDeleteClicked() {
+            try {
+                await this.$dialog.confirm('Delete this category and all its shortcuts?', {
+                    okText: 'Delete',
+                    cancelText: 'Cancel',
+                });
                 this.$emit('delete', this.categoryData);
+            } catch (e) {
+                // cancelled
             }
         },
     },

@@ -467,10 +467,15 @@ export default {
         onCopyClicked() {
             this.$emit('copy', this.shortcutData);
         },
-        onDeleteClicked() {
-            // eslint-disable-next-line no-restricted-globals
-            if (confirm('Delete this shortcut?')) {
+        async onDeleteClicked() {
+            try {
+                await this.$dialog.confirm('Delete this shortcut?', {
+                    okText: 'Delete',
+                    cancelText: 'Cancel',
+                });
                 this.$emit('delete', this.shortcutData);
+            } catch (e) {
+                // cancelled
             }
         },
     },

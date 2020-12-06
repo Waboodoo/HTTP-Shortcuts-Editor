@@ -24,4 +24,7 @@ If PHP is not your cup of tea, I understand. I went with it because it was easie
 
 ## Acknowledgements
 
-This project uses [https://github.com/SortableJS/Vue.Draggable](Vue.Draggable) and [https://github.com/koca/vue-prism-editor](Vue Prism Editor), both licensed under an MIT License.
+This project uses
+- [https://github.com/SortableJS/Vue.Draggable](Vue.Draggable) (MIT License)
+- [https://github.com/koca/vue-prism-editor](Vue Prism Editor) (MIT License)
+- [https://github.com/Godofbrowser/vuejs-dialog](Vuejs Dialog Plugin) (MIT License)

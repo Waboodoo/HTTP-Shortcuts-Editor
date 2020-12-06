@@ -88,11 +88,11 @@ export default Vue.extend({
                 await this.saveData();
             } catch (e) {
                 if (e instanceof ValidationError) {
-                    // eslint-disable-next-line no-alert
-                    alert(e.message);
+                    this.$dialog.alert(e.message, {
+                        okText: 'OK',
+                    });
                 } else {
-                    // eslint-disable-next-line no-alert
-                    alert('An error occurred while trying to save your changes. Please try again.');
+                    this.$dialog.alert('An error occurred while trying to save your changes. Please try again.');
                 }
             }
         },
