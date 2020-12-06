@@ -12,7 +12,7 @@ import Vue from 'vue';
 import Icon from '@/components/basic/Icon.vue';
 import VariablePickerDialog from '@/components/variables/VariablePickerDialog.vue';
 
-const VIEW_NAME = 'variable-picker';
+const DIALOG_NAME = 'variable-picker';
 
 export default {
     components: {
@@ -25,13 +25,13 @@ export default {
         },
     },
     created() {
-        Vue.dialog.registerComponent(VIEW_NAME, VariablePickerDialog);
+        Vue.dialog.registerComponent(DIALOG_NAME, VariablePickerDialog);
     },
     methods: {
         async openPicker() {
             try {
                 const choice = await this.$dialog.confirm('', {
-                    view: VIEW_NAME,
+                    view: DIALOG_NAME,
                     html: true,
                     animation: 'fade',
                     backdropClose: true,

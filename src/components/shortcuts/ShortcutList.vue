@@ -32,10 +32,14 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import Shortcut from '@/components/shortcuts/Shortcut.vue';
 import draggable from 'vuedraggable';
 import StyledButton from '@/components/basic/StyledButton.vue';
 import { cloneShortcut, createNewShortcut } from '@/model';
+import ShortcutTypePicker from '@/components/shortcuts/ShortcutTypePicker.vue';
+
+const DIALOG_NAME = 'shortcut-type-picker';
 
 export default {
     components: {
@@ -63,6 +67,9 @@ export default {
             this.$emit('update:shortcuts', newData);
         },
     },
+    created() {
+        Vue.dialog.registerComponent(DIALOG_NAME, ShortcutTypePicker);
+    },
     methods: {
         onUpdate(shortcut) {
             this.shortcutsData = this.shortcutsData.map(
@@ -81,8 +88,18 @@ export default {
         onDelete(shortcut) {
             this.shortcutsData = this.shortcutsData.filter((s) => s.id !== shortcut.id);
         },
-        addNewShortcut() {
-            this.shortcutsData.push(createNewShortcut());
+        async addNewShortcut() {
+            try {
+                const choice = await this.$dialog.confirm('', {
+                    view: DIALOG_NAME,
+                    html: true,
+                    animation: 'fade',
+                    backdropClose: true,
+                });
+                this.shortcutsData.push(createNewShortcut(choice.data.type));
+            } catch (e) {
+                // cancelled
+            }
         },
     },
 };
