@@ -19,6 +19,7 @@
         <template #main class="editor__main">
             <category-list
                 :categories="data.categories"
+                :variables="data.variables"
                 @update:categories="onUpdateCategories"
             />
 
@@ -88,9 +89,7 @@ export default Vue.extend({
                 await this.saveData();
             } catch (e) {
                 if (e instanceof ValidationError) {
-                    this.$dialog.alert(e.message, {
-                        okText: 'OK',
-                    });
+                    this.$dialog.alert(e.message);
                 } else {
                     this.$dialog.alert('An error occurred while trying to save your changes. Please try again.');
                 }

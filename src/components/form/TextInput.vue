@@ -65,6 +65,22 @@ export default {
         onInput(event) {
             this.$emit('input', event.target.value);
         },
+        insertAtCursor(text) {
+            const { input } = this.$refs;
+            if (input.selectionStart || input.selectionStart === 0) {
+                const startPos = input.selectionStart;
+                const endPos = input.selectionEnd;
+                input.value = input.value.substring(0, startPos)
+                    + text
+                    + input.value.substring(endPos, input.value.length);
+                input.selectionStart = startPos + text.length;
+                input.selectionEnd = startPos + text.length;
+            } else {
+                input.value += text;
+            }
+            this.$emit('input', this.$refs.input.value);
+            this.$refs.input.focus();
+        },
     },
 };
 </script>

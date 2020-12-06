@@ -9,6 +9,7 @@
                  v-for="category in categoriesData"
                  :key="category.id"
                  :category="category"
+                 :variables="variables"
                  :allow-deletion="categoriesData.length > 1"
                  class="category-list__item"
                  @update:category="onUpdate"
@@ -39,6 +40,10 @@ export default {
     },
     props: {
         categories: {
+            type: Array,
+            required: true,
+        },
+        variables: {
             type: Array,
             required: true,
         },

@@ -9,6 +9,7 @@
                 v-for="shortcut in shortcutsData"
                 :key="shortcut.id"
                 :shortcut="shortcut"
+                :variables="variables"
                 class="shortcut-list__item"
                 @update:shortcut="onUpdate"
                 @copy="onCopy"
@@ -44,6 +45,10 @@ export default {
     },
     props: {
         shortcuts: {
+            type: Array,
+            required: true,
+        },
+        variables: {
             type: Array,
             required: true,
         },

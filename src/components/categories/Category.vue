@@ -43,6 +43,7 @@
             <labelled label="Shortcuts">
                 <shortcut-list
                     :shortcuts="category.shortcuts"
+                    :variables="variables"
                     @update:shortcuts="onUpdate"
                 />
             </labelled>
@@ -76,6 +77,10 @@ export default {
         },
         allowDeletion: {
             type: Boolean,
+        },
+        variables: {
+            type: Array,
+            required: true,
         },
     },
     data() {
@@ -113,7 +118,6 @@ export default {
             try {
                 await this.$dialog.confirm('Delete this category and all its shortcuts?', {
                     okText: 'Delete',
-                    cancelText: 'Cancel',
                 });
                 this.$emit('delete', this.categoryData);
             } catch (e) {

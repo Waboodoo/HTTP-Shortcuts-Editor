@@ -59,12 +59,18 @@
                         { value: HttpMethod.TRACE, label: 'TRACE' },
                     ]"
                 />
-                <text-input
+                <with-variable-picker
                     v-if="usesUrl"
-                    v-model="shortcutData.url"
-                    label="URL"
-                    placeholder="Enter a URL for this shortcut"
-                />
+                    :variables="variables"
+                    @insert-text="(text) => this.$refs.urlInput.insertAtCursor(text)"
+                >
+                    <text-input
+                        ref="urlInput"
+                        v-model="shortcutData.url"
+                        label="URL"
+                        placeholder="Enter a URL for this shortcut"
+                    />
+                </with-variable-picker>
             </form-section>
 
             <form-section v-if="isRegularShortcut" title="Request Headers">
@@ -103,13 +109,19 @@
                     label="Content-Type"
                     placeholder="Enter the type of your request body, e.g. application/json"
                 />
-                <text-input
+                <with-variable-picker
                     v-if="usesCustomTextRequestBody"
-                    v-model="shortcutData.bodyContent"
-                    label="Request Body"
-                    placeholder="Enter the request body, e.g., a JSON object"
-                    :multiline="true"
-                />
+                    :variables="variables"
+                    @insert-text="(text) => this.$refs.bodyInput.insertAtCursor(text)"
+                >
+                    <text-input
+                        ref="bodyInput"
+                        v-model="shortcutData.bodyContent"
+                        label="Request Body"
+                        placeholder="Enter the request body, e.g., a JSON object"
+                        :multiline="true"
+                    />
+                </with-variable-picker>
                 <span v-if="
                 shortcutData.requestBodyType === RequestBodyType.FORM_DATA
                     || shortcutData.requestBodyType === RequestBodyType.X_WWW_FORM_URLENCODE
@@ -127,21 +139,42 @@
                         { value: AuthenticationMethod.BEARER, label: 'Bearer Authentication' },
                     ]"
                 />
-                <text-input
+                <with-variable-picker
                     v-if="usesUsernameAndPassword"
-                    v-model="shortcutData.username"
-                    label="Username"
-                />
-                <text-input
+                    :variables="variables"
+                    @insert-text="(text) => this.$refs.usernameInput.insertAtCursor(text)"
+                >
+                    <text-input
+                        ref="usernameInput"
+                        v-model="shortcutData.username"
+                        label="Username"
+                        placeholder="Enter a username"
+                    />
+                </with-variable-picker>
+                <with-variable-picker
                     v-if="usesUsernameAndPassword"
-                    v-model="shortcutData.password"
-                    label="Password"
-                />
-                <text-input
+                    :variables="variables"
+                    @insert-text="(text) => this.$refs.passwordInput.insertAtCursor(text)"
+                >
+                    <text-input
+                        ref="passwordInput"
+                        v-model="shortcutData.password"
+                        label="Password"
+                        placeholder="Enter a password"
+                    />
+                </with-variable-picker>
+                <with-variable-picker
                     v-if="usesAuthToken"
-                    v-model="shortcutData.authToken"
-                    label="Token"
-                />
+                    :variables="variables"
+                    @insert-text="(text) => this.$refs.tokenInput.insertAtCursor(text)"
+                >
+                    <text-input
+                        ref="tokenInput"
+                        v-model="shortcutData.authToken"
+                        label="Token"
+                        placeholder="Enter a token"
+                    />
+                </with-variable-picker>
             </form-section>
 
             <form-section v-if="isRegularShortcut" title="Response Handling">
@@ -164,12 +197,18 @@
                     ]"
                 />
 
-                <text-input
+                <with-variable-picker
                     v-if="usesSuccessMessage"
-                    v-model="shortcutData.responseHandling.successMessage"
-                    label="Message"
-                    placeholder="Shortcut executed."
-                />
+                    :variables="variables"
+                    @insert-text="(text) => this.$refs.successMessageInput.insertAtCursor(text)"
+                >
+                    <text-input
+                        ref="successMessage"
+                        v-model="shortcutData.responseHandling.successMessage"
+                        label="Message"
+                        placeholder="Shortcut executed."
+                    />
+                </with-variable-picker>
 
                 <select-input
                     v-model="shortcutData.responseHandling.failureOutput"
@@ -207,29 +246,53 @@
                     See the <a href="https://http-shortcuts.rmy.ch/scripting" target="_blank">Scripting documentation</a> for more information.
                 </template>
                 <template>
-                    <script-input
-                        v-model="shortcutData.codeOnPrepare"
-                        label="Run before Execution"
-                        :placeholder="
-                            isScriptingShortcut
-                            ? 'Add JavaScript code here'
-                            : 'Add JavaScript code here to run before the shortcut is executed, ' +
-                             'e.g., to prepare some variables.'
+                    <with-variable-picker
+                        :variables="variables"
+                        @variable-picked="
+                            (variable) => this.$refs.scriptPrepareInput.insertVariable(variable)
                         "
-                    />
-                    <script-input
+                    >
+                        <script-input
+                            ref="scriptPrepareInput"
+                            v-model="shortcutData.codeOnPrepare"
+                            label="Run before Execution"
+                            :placeholder="
+                                isScriptingShortcut
+                                ? 'Add JavaScript code here'
+                                : 'Add JavaScript code here to run before the shortcut is ' +
+                                 'executed, e.g., to prepare some variables.'
+                            "
+                        />
+                    </with-variable-picker>
+                    <with-variable-picker
                         v-if="usesScriptingOnSuccess"
-                        v-model="shortcutData.codeOnSuccess"
-                        label="Run after Execution"
-                        :placeholder="'Add JavaScript code here to run after the shortcut is ' +
-                            'executed, e.g., to process the response.'"
-                    />
-                    <script-input
+                        :variables="variables"
+                        @variable-picked="
+                            (variable) => this.$refs.scriptSuccessInput.insertVariable(variable)
+                        "
+                    >
+                        <script-input
+                            ref="scriptSuccessInput"
+                            v-model="shortcutData.codeOnSuccess"
+                            label="Run after Execution"
+                            :placeholder="'Add JavaScript code here to run after the shortcut is ' +
+                                'executed, e.g., to process the response.'"
+                        />
+                    </with-variable-picker>
+                    <with-variable-picker
                         v-if="usesScriptingOnFailure"
-                        v-model="shortcutData.codeOnFailure"
-                        label="Run on Failure"
-                        placeholder="Add JavaScript code here to run in case the request fails."
-                    />
+                        :variables="variables"
+                        @variable-picked="
+                            (variable) => this.$refs.scriptFailureInput.insertVariable(variable)
+                        "
+                    >
+                        <script-input
+                            ref="scriptFailureInput"
+                            v-model="shortcutData.codeOnFailure"
+                            label="Run on Failure"
+                            placeholder="Add JavaScript code here to run in case the request fails."
+                        />
+                    </with-variable-picker>
                 </template>
                 <!-- TODO: Code Snippet Picker -->
             </form-section>
@@ -291,14 +354,20 @@
                         shortcutData.timeout = parseInt(value);
                     }"
                 />
-                <text-input
-                    :value="shortcutData.proxyHost || ''"
-                    label="Proxy Hostname / IP Address"
-                    placeholder="Enter the hostname or IP address of an HTTP proxy"
-                    @input="(value) => {
-                        shortcutData.proxyHost = value.length > 0 ? value : null;
-                    }"
-                />
+                <with-variable-picker
+                    :variables="variables"
+                    @insert-text="(text) => this.$refs.proxyInput.insertAtCursor(text)"
+                >
+                    <text-input
+                        ref="proxyInput"
+                        :value="shortcutData.proxyHost || ''"
+                        label="Proxy Hostname / IP Address"
+                        placeholder="Enter the hostname or IP address of an HTTP proxy"
+                        @input="(value) => {
+                            shortcutData.proxyHost = value.length > 0 ? value : null;
+                        }"
+                    />
+                </with-variable-picker>
                 <text-input
                     :value="shortcutData.proxyPort ? `${shortcutData.proxyPort}` : ''"
                     label="Proxy Port"
@@ -323,6 +392,7 @@ import Icon from '@/components/basic/Icon.vue';
 import ScriptInput from '@/components/form/ScriptInput.vue';
 import SelectInput from '@/components/form/SelectInput.vue';
 import TextInput from '@/components/form/TextInput.vue';
+import WithVariablePicker from '@/components/variables/WithVariablePicker.vue';
 import {
     AuthenticationMethod,
     ExecutionType,
@@ -343,10 +413,15 @@ export default {
         ScriptInput,
         SelectInput,
         TextInput,
+        WithVariablePicker,
     },
     props: {
         shortcut: {
             type: Object,
+            required: true,
+        },
+        variables: {
+            type: Array,
             required: true,
         },
     },
@@ -471,7 +546,6 @@ export default {
             try {
                 await this.$dialog.confirm('Delete this shortcut?', {
                     okText: 'Delete',
-                    cancelText: 'Cancel',
                 });
                 this.$emit('delete', this.shortcutData);
             } catch (e) {

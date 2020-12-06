@@ -60,6 +60,10 @@ export default {
             this.code = value;
             this.$emit('input', value);
         },
+        insertVariable(variable) {
+            // TODO: Insert at cursor instead of end
+            this.onInput(`${this.code}getVariable('${variable.key}')`);
+        },
     },
 };
 </script>

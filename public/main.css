@@ -17,3 +17,15 @@ a:hover {
     text-decoration: none;
     color: #0277bd;
 }
+
+/* Override the styling for the Vue Dialogs library */
+.dg-container.dg-container {
+    display: flex;
+    align-items: center;
+}
+.dg-content-cont--floating.dg-content-cont--floating {
+    top: inherit;
+    position: initial;
+    -webkit-transform: none;
+    transform: none;
+}
