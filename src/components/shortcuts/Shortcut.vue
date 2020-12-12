@@ -74,10 +74,11 @@
             </form-section>
 
             <form-section v-if="isRegularShortcut" title="Request Headers">
-                <template slot="header">
-                    Not yet implemented. Coming soon (hopefully)
-                </template>
-                <!-- TODO -->
+                <header-list
+                    :headers="shortcutData.headers"
+                    :variables="variables"
+                    @update:headers="onUpdate"
+                />
             </form-section>
 
             <form-section v-if="usesRequestBody" title="Request Body / Parameters">
@@ -388,6 +389,7 @@
 import CheckboxInput from '@/components/form/CheckboxInput.vue';
 import Chevron from '@/components/basic/Chevron.vue';
 import FormSection from '@/components/form/FormSection.vue';
+import HeaderList from '@/components/shortcuts/headers/HeaderList.vue';
 import Icon from '@/components/basic/Icon.vue';
 import ScriptInput from '@/components/form/ScriptInput.vue';
 import SelectInput from '@/components/form/SelectInput.vue';
@@ -409,6 +411,7 @@ export default {
         CheckboxInput,
         Chevron,
         FormSection,
+        HeaderList,
         Icon,
         ScriptInput,
         SelectInput,
@@ -536,6 +539,12 @@ export default {
         },
     },
     methods: {
+        onUpdate(headers) {
+            this.$emit('update:shortcut', {
+                ...this.shortcut,
+                headers,
+            });
+        },
         toggle() {
             this.expanded = !this.expanded;
         },

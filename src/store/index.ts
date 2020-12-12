@@ -52,16 +52,24 @@ function validate(data: Base) {
         throw new ValidationError('There must be at least one category which isn\'t hidden.');
     }
     if (data.categories.some((category) => category.name.length === 0)) {
-        throw new ValidationError('There must not be any categories without a name.');
+        throw new ValidationError('One or more categories don\'t have a name. Please name them.');
     }
     if (data.categories.some(
         (category) => category.shortcuts.some(
             (shortcut) => shortcut.name.length === 0,
         ),
     )) {
-        throw new ValidationError('There must not be any shortcuts without a name.');
+        throw new ValidationError('One or more shortcuts don\'t have a name. Please name them.');
     }
-    // TODO Must not have any regular or browser shortcuts without a valid URL
+    if (data.categories.some(
+        (category) => category.shortcuts.some(
+            (shortcut) => shortcut.headers.some(
+                (header) => header.key.length === 0,
+            ),
+        ),
+    )) {
+        throw new ValidationError('One or more headers don\'t have a name. Please name them.');
+    }
 }
 
 export default new Vuex.Store({

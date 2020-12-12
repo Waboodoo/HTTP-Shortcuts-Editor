@@ -236,3 +236,11 @@ export function createNewCategory(): Category {
         layoutType: CategoryLayoutType.LINEAR_LIST,
     };
 }
+
+export function createNewHeader(): Header {
+    return {
+        id: uuidv4(),
+        key: '',
+        value: '',
+    };
+}
