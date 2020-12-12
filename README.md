@@ -2,6 +2,8 @@
 
 This editor allows editing shortcuts from the [HTTP Shortcuts](https://github.com/Waboodoo/HTTP-Shortcuts) app remotely, from the comfort of a desktop browser.
 
+It is deployed here: [http-shortcuts.rmy.ch/editor](https://http-shortcuts.rmy.ch/editor)
+
 ## Project Setup
 
 ### Web App
@@ -13,7 +15,13 @@ yarn install
 yarn build
 ```
 
-You might want to remove [this line](src/router/index.ts#L22) from the router config file if you want to host the web app at the domain root instead of a `/editor` subpath.
+or for local development
+
+```
+yarn serve
+```
+
+You might want to remove [this line](src/router/index.ts#L22) from the router config file if you want to host the web app at the domain root instead of the `/editor` subpath.
 
 ### API Server
 
@@ -25,6 +33,6 @@ If PHP is not your cup of tea, I understand. I went with it because it was easie
 ## Acknowledgements
 
 This project uses
-- [https://github.com/SortableJS/Vue.Draggable](Vue.Draggable) (MIT License)
-- [https://github.com/koca/vue-prism-editor](Vue Prism Editor) (MIT License)
-- [https://github.com/Godofbrowser/vuejs-dialog](Vuejs Dialog Plugin) (MIT License)
+- [Vue.Draggable](https://github.com/SortableJS/Vue.Draggable) (MIT License)
+- [Vue Prism Editor](https://github.com/koca/vue-prism-editor) (MIT License)
+- [Vuejs Dialog Plugin](https://github.com/Godofbrowser/vuejs-dialog) (MIT License)
