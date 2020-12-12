@@ -82,7 +82,7 @@ export function replaceVariableKeysWithPlaceholders(data: Base): Base {
             VARIABLE_KEY_PLACEHOLDER_REGEX,
             (match, variableKey) => {
                 const variable = getVariableByKey(variableKey, data);
-                return variable ? `{{${variable.id}}` : match;
+                return variable ? `{{${variable.id}}}` : match;
             },
         ),
         (input: string) => input.replaceAll(
