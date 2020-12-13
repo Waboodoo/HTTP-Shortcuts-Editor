@@ -77,7 +77,7 @@
                 <header-list
                     :headers="shortcutData.headers"
                     :variables="variables"
-                    @update:headers="onUpdate"
+                    @update:headers="onUpdateHeaders"
                 />
             </form-section>
 
@@ -108,7 +108,7 @@
                     v-if="usesCustomTextRequestBody"
                     v-model="shortcutData.contentType"
                     label="Content-Type"
-                    placeholder="Enter the type of your request body, e.g. application/json"
+                    placeholder="Enter the type of your request body, e.g., application/json"
                 />
                 <with-variable-picker
                     v-if="usesCustomTextRequestBody"
@@ -123,10 +123,13 @@
                         :multiline="true"
                     />
                 </with-variable-picker>
-                <span v-if="
-                shortcutData.requestBodyType === RequestBodyType.FORM_DATA
-                    || shortcutData.requestBodyType === RequestBodyType.X_WWW_FORM_URLENCODE
-                ">Not supported yet</span>
+                <parameter-list
+                    v-if="usesParameters"
+                    :parameters="shortcutData.parameters"
+                    :variables="variables"
+                    :supports-files="shortcutData.requestBodyType === RequestBodyType.FORM_DATA"
+                    @update:parameters="onUpdateParameters"
+                />
             </form-section>
 
             <form-section v-if="isRegularShortcut" title="Authentication">
@@ -391,6 +394,7 @@ import Chevron from '@/components/basic/Chevron.vue';
 import FormSection from '@/components/form/FormSection.vue';
 import HeaderList from '@/components/shortcuts/headers/HeaderList.vue';
 import Icon from '@/components/basic/Icon.vue';
+import ParameterList from '@/components/shortcuts/parameters/ParameterList.vue';
 import ScriptInput from '@/components/form/ScriptInput.vue';
 import SelectInput from '@/components/form/SelectInput.vue';
 import TextInput from '@/components/form/TextInput.vue';
@@ -413,6 +417,7 @@ export default {
         FormSection,
         HeaderList,
         Icon,
+        ParameterList,
         ScriptInput,
         SelectInput,
         TextInput,
@@ -507,6 +512,13 @@ export default {
             }
             return this.shortcutData.requestBodyType === RequestBodyType.CUSTOM_TEXT;
         },
+        usesParameters() {
+            if (!this.isRegularShortcut) {
+                return false;
+            }
+            return this.shortcutData.requestBodyType === RequestBodyType.FORM_DATA
+                || this.shortcutData.requestBodyType === RequestBodyType.X_WWW_FORM_URLENCODE;
+        },
         usesDisplayType() {
             if (!this.isRegularShortcut) {
                 return false;
@@ -539,10 +551,16 @@ export default {
         },
     },
     methods: {
-        onUpdate(headers) {
+        onUpdateHeaders(headers) {
             this.$emit('update:shortcut', {
                 ...this.shortcut,
                 headers,
+            });
+        },
+        onUpdateParameters(parameters) {
+            this.$emit('update:shortcut', {
+                ...this.shortcut,
+                parameters,
             });
         },
         toggle() {

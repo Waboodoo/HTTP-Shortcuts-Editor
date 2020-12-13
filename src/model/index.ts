@@ -244,3 +244,13 @@ export function createNewHeader(): Header {
         value: '',
     };
 }
+
+export function createNewParameter(parameterType: ParameterType): Parameter {
+    return {
+        id: uuidv4(),
+        type: parameterType,
+        key: '',
+        value: '',
+        fileName: '',
+    };
+}

@@ -1,6 +1,10 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { Base } from '@/model';
+import {
+    Base,
+    ParameterType,
+    RequestBodyType,
+} from '@/model';
 import ValidationError from '@/store/errors/ValidationError';
 import ApiError from '@/store/errors/ApiError';
 import {
@@ -69,6 +73,30 @@ function validate(data: Base) {
         ),
     )) {
         throw new ValidationError('One or more headers don\'t have a name. Please name them.');
+    }
+    if (data.categories.some(
+        (category) => category.shortcuts.some(
+            (shortcut) => shortcut.parameters.some(
+                (parameter) => parameter.key.length === 0,
+            ),
+        ),
+    )) {
+        throw new ValidationError(
+            'One or more request parameters don\'t have a name. Please name them.',
+        );
+    }
+    if (data.categories.some(
+        (category) => category.shortcuts.some(
+            (shortcut) => shortcut.requestBodyType === RequestBodyType.X_WWW_FORM_URLENCODE
+                && shortcut.parameters.some(
+                    (parameter) => parameter.type !== ParameterType.STRING,
+                ),
+        ),
+    )) {
+        throw new ValidationError(
+            'One or more request parameters are invalid. Please remove any file/files parameters '
+            + 'from shortcuts that use (x-www-form-urlencoded) as the Request Body Type.',
+        );
     }
 }
 
