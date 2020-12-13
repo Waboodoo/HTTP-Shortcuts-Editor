@@ -6,7 +6,7 @@
                 href="https://http-shortcuts.rmy.ch/documentation"
                 target="_blank"
                 class="page__header__documentation-link"
-            >Documentation</a>
+            >{{ $t('mainNav.documentationLink') }}</a>
         </header>
         <main class="page__main">
             <slot name="main" />

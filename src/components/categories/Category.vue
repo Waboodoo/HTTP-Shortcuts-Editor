@@ -7,13 +7,13 @@
                 <span
                     v-if="categoryData.hidden"
                     class="category__header__title__suffix"
-                >(hidden)</span>
+                >{{ $t('categories.hidden.nameSuffix') }}</span>
             </div>
             <icon
                 v-if="allowDeletion"
                 class="category__header__delete-button"
                 name="delete"
-                title="Delete Category"
+                :title="$t('categories.delete.buttonLabel')"
                 @click.stop="onDeleteClicked"
             />
             <chevron
@@ -25,22 +25,22 @@
             <text-input
                 v-if="expanded"
                 v-model="categoryData.name"
-                label="Category Name"
-                placeholder="Enter a name for this category"
+                :label="$t('categories.name.label')"
+                :placeholder="$t('categories.name.placeholder')"
             />
             <checkbox-input
                 v-model="categoryData.hidden"
-                label="Hidden"
+                :label="$t('categories.hidden.checkboxLabel')"
             />
             <select-input
                 v-model="categoryData.layoutType"
-                label="Layout Type"
+                :label="$t('categories.layoutType.label')"
                 :options="[
-                    { value: 'linear_list', label: 'List' },
-                    { value: 'grid', label: 'Grid' },
+                    { value: 'linear_list', label: $t('categories.layoutType.options.list') },
+                    { value: 'grid', label: $t('categories.layoutType.options.grid') },
                 ]"
             />
-            <labelled label="Shortcuts">
+            <labelled :label="$t('categories.shortcuts.label')">
                 <shortcut-list
                     :shortcuts="category.shortcuts"
                     :variables="variables"
@@ -116,8 +116,8 @@ export default {
         },
         async onDeleteClicked() {
             try {
-                await this.$dialog.confirm('Delete this category and all its shortcuts?', {
-                    okText: 'Delete',
+                await this.$dialog.confirm(this.$t('categories.delete.prompt'), {
+                    okText: this.$t('common.dialogButtons.delete'),
                 });
                 this.$emit('delete', this.categoryData);
             } catch (e) {

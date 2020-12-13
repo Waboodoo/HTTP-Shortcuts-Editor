@@ -21,7 +21,7 @@
             class="category-list__add-button"
             @click="addNewCategory"
         >
-            Add New Category
+            {{ $t('categories.add.buttonLabel') }}
         </styled-button>
     </div>
 </template>
