@@ -11,12 +11,15 @@ import {
     replaceVariableKeysWithPlaceholders,
     replaceVariablePlaceholdersWithKeys,
 } from '@/store/variables';
+import i18next from 'i18next';
 
 Vue.use(Vuex);
 
 const REQUIRED_VERSION = 41;
 const LOCAL_STORAGE_DEVICE_ID = 'device_id';
 const API_PATH = 'api/files/';
+
+const $t = i18next.t.bind(i18next);
 
 async function makeApiRequest(
     deviceId: string,
@@ -53,17 +56,17 @@ function normalize(data: Base): Base {
 
 function validate(data: Base) {
     if (data.categories.every((category) => category.hidden)) {
-        throw new ValidationError('There must be at least one category which isn\'t hidden.');
+        throw new ValidationError($t('validation.allCategoriesHidden'));
     }
     if (data.categories.some((category) => category.name.length === 0)) {
-        throw new ValidationError('One or more categories don\'t have a name. Please name them.');
+        throw new ValidationError($t('validation.unnamedCategories'));
     }
     if (data.categories.some(
         (category) => category.shortcuts.some(
             (shortcut) => shortcut.name.length === 0,
         ),
     )) {
-        throw new ValidationError('One or more shortcuts don\'t have a name. Please name them.');
+        throw new ValidationError($t('validation.unnamedShortcuts'));
     }
     if (data.categories.some(
         (category) => category.shortcuts.some(
@@ -72,7 +75,7 @@ function validate(data: Base) {
             ),
         ),
     )) {
-        throw new ValidationError('One or more headers don\'t have a name. Please name them.');
+        throw new ValidationError($t('validation.unnamedHeaders'));
     }
     if (data.categories.some(
         (category) => category.shortcuts.some(
@@ -81,9 +84,7 @@ function validate(data: Base) {
             ),
         ),
     )) {
-        throw new ValidationError(
-            'One or more request parameters don\'t have a name. Please name them.',
-        );
+        throw new ValidationError($t('validation.unnamedParameters'));
     }
     if (data.categories.some(
         (category) => category.shortcuts.some(
@@ -93,10 +94,7 @@ function validate(data: Base) {
                 ),
         ),
     )) {
-        throw new ValidationError(
-            'One or more request parameters are invalid. Please remove any file/files parameters '
-            + 'from shortcuts that use (x-www-form-urlencoded) as the Request Body Type.',
-        );
+        throw new ValidationError($t('validation.invalidParameters'));
     }
 }
 
@@ -149,7 +147,7 @@ export default new Vuex.Store({
                 );
 
                 if (data.version !== REQUIRED_VERSION) {
-                    throw new ValidationError('The version of the HTTP Shortcuts app is incompatible with this version of the editor.');
+                    throw new ValidationError($t('validation.incompatibleVersion'));
                 }
 
                 commit('SET_DATA', replaceVariablePlaceholdersWithKeys(normalize(data)));

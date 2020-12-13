@@ -60,7 +60,6 @@ export default Vue.extend({
     },
     methods: {
         ...mapActions([
-            'loadData',
             'setData',
             'saveData',
         ]),

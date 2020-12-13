@@ -41,6 +41,7 @@ import Notice from '@/components/basic/Notice.vue';
 import InitForm from '@/components/InitForm.vue';
 import Page from '@/views/Page.vue';
 import ApiError from '@/store/errors/ApiError';
+import ValidationError from '@/store/errors/ValidationError';
 
 export default Vue.extend({
     components: {
@@ -64,7 +65,9 @@ export default Vue.extend({
                 await this.loadData();
                 await this.$router.push('/edit');
             } catch (e) {
-                if (e instanceof ApiError) {
+                if (e instanceof ValidationError) {
+                    this.error = e.message;
+                } else if (e instanceof ApiError) {
                     this.error = 'Incorrect device ID or password, or shortcuts were not pushed from app';
                 } else {
                     this.error = 'Failed to open editor. Please try again';
