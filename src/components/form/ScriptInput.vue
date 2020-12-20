@@ -50,9 +50,6 @@ export default {
         this.id = uuidv4();
     },
     methods: {
-        focus() {
-            this.$refs.input.focus();
-        },
         highlighter(code) {
             return highlight(code, languages.js, 'js');
         },
@@ -77,9 +74,6 @@ export default {
     font-size: 14px
     line-height: 1.5
     padding: 5px
-
-::v-deep .prism-editor__container
-    height: 100%
 
 ::v-deep .prism-editor__textarea:focus
     outline: none
