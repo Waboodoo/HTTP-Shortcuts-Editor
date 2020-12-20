@@ -1,51 +1,46 @@
 <template>
-    <div class="parameter">
-        <div class="parameter__header" @click="toggle">
-            <icon class="parameter__header__drag-handle" name="drag-handle" />
-            <div class="parameter__header__title">
-                {{ parameterTitle }}
+    <div class="variable">
+        <div class="variable__header" @click="toggle">
+            <icon class="variable__header__drag-handle" name="drag-handle" />
+            <div class="variable__header__title">
+                {{ variableTitle }}
+                <span
+                    class="variable__header__title__suffix"
+                >({{ variableType }})</span>
             </div>
             <icon
-                class="parameter__header__delete-button"
+                class="variable__header__delete-button"
                 name="delete"
-                title="Delete Parameter"
+                title="Delete Variable"
                 @click.stop="onDeleteClicked"
             />
             <chevron
                 :expanded="expanded"
-                class="parameter__header__chevron"
+                class="variable__header__chevron"
             />
         </div>
-        <div v-if="expanded" class="parameter__form">
+        <div v-if="expanded" class="variable__form">
+            <text-input
+                ref="keyInput"
+                v-model="variableData.key"
+                label="Name"
+                placeholder="Enter the name for this variable"
+                maxlength="30"
+            />
             <with-variable-picker
-                :variables="variables"
-                @insert-text="(text) => this.$refs.keyInput.insertAtCursor(text)"
-            >
-                <text-input
-                    ref="keyInput"
-                    v-model="parameterData.key"
-                    label="Name"
-                    placeholder="Enter the name for this parameter"
-                />
-            </with-variable-picker>
-            <with-variable-picker
-                v-if="parameterData.type === ParameterType.STRING"
+                v-if="variableData.type === VariableType.CONSTANT"
                 :variables="variables"
                 @insert-text="(text) => this.$refs.valueInput.insertAtCursor(text)"
             >
                 <text-input
                     ref="valueInput"
-                    v-model="parameterData.value"
+                    v-model="variableData.value"
                     label="Value"
-                    placeholder="Enter the value for this parameter"
+                    maxlength="30000"
+                    placeholder="Enter the value for this variable"
+                    :multiline="true"
                 />
             </with-variable-picker>
-            <text-input
-                v-if="parameterData.type === ParameterType.FILE"
-                v-model="parameterData.fileName"
-                label="File Name (optional)"
-                placeholder="Enter the file name for this parameter"
-            />
         </div>
     </div>
 </template>
@@ -55,7 +50,7 @@ import Chevron from '@/components/basic/Chevron.vue';
 import Icon from '@/components/basic/Icon.vue';
 import TextInput from '@/components/form/TextInput.vue';
 import WithVariablePicker from '@/components/variables/WithVariablePicker.vue';
-import { ParameterType } from '@/model';
+import { VariableType } from '@/model';
 
 export default {
     components: {
@@ -65,7 +60,7 @@ export default {
         WithVariablePicker,
     },
     props: {
-        parameter: {
+        variable: {
             type: Object,
             required: true,
         },
@@ -77,32 +72,48 @@ export default {
     data() {
         return {
             expanded: false,
-            parameterData: { ...this.parameter },
-            ParameterType,
+            variableData: { ...this.variable },
+            VariableType,
         };
     },
     watch: {
-        parameterData: {
+        variableData: {
             handler(newData) {
-                this.$emit('update:parameter', newData);
+                this.variableData = newData;
+                this.variableData.key = newData.key.replace(/[^A-Za-z0-9_]/g, '');
+                this.$emit('update:variable', this.variableData);
             },
             deep: true,
         },
     },
     computed: {
-        parameterTitle() {
-            return this.parameterData.key.length > 0
-                ? `${this.parameterData.key}: ${this.parameterValue}`
+        variableTitle() {
+            return this.variableData.key.length > 0
+                ? this.variableData.key
                 : '-';
         },
-        parameterValue() {
-            switch (this.parameterData.type) {
-            case ParameterType.FILE:
-                return '(File)';
-            case ParameterType.FILES:
-                return '(Files)';
+        variableType() {
+            switch (this.variableData.type) {
+            case VariableType.TEXT:
+                return 'Text Input';
+            case VariableType.NUMBER:
+                return 'Number Input';
+            case VariableType.PASSWORD:
+                return 'Password Input';
+            case VariableType.SELECT:
+                return 'Multiple Choice Selection';
+            case VariableType.TOGGLE:
+                return 'Toggle';
+            case VariableType.COLOR:
+                return 'Color Input';
+            case VariableType.DATE:
+                return 'Date Input';
+            case VariableType.TIME:
+                return 'Time Input';
+            case VariableType.SLIDER:
+                return 'Number Slider';
             default:
-                return this.parameterData.value;
+                return 'Static Variable';
             }
         },
     },
@@ -112,10 +123,10 @@ export default {
         },
         async onDeleteClicked() {
             try {
-                await this.$dialog.confirm('Delete this parameter?', {
+                await this.$dialog.confirm('Delete this variable?', {
                     okText: 'Delete',
                 });
-                this.$emit('delete', this.parameterData);
+                this.$emit('delete', this.variableData);
             } catch (e) {
                 // cancelled
             }
@@ -125,7 +136,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.parameter
+.variable
     background: #ffffff
     border: 1px solid #CCCCCC
 
@@ -150,6 +161,9 @@ export default {
             font-size: 1.2em
             padding: 15px 0
             flex: 1 1 auto
+
+            &__suffix
+                color: #CCCCCC
 
         &__chevron, &__delete-button
             flex: 0 0 auto

@@ -1,6 +1,7 @@
 import {
     Base,
     Variable,
+    VariableType,
 } from '@/model';
 
 const VARIABLE_ID_PLACEHOLDER_REGEX = RegExp('{{([0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-4[0-9A-Fa-f]{3}-[89ABab][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}|[0-9]+)}}', 'g');
@@ -43,6 +44,12 @@ function transformVariables(
                 codeOnSuccess: codeTransformation(s.codeOnSuccess),
                 codeOnFailure: codeTransformation(s.codeOnFailure),
             })),
+        })),
+        variables: data.variables.map((v) => ({
+            ...v,
+            value: v.value && v.type === VariableType.CONSTANT
+                ? regularTransformation(v.value)
+                : v.value,
         })),
     };
 }
