@@ -41,12 +41,33 @@
                     :multiline="true"
                 />
             </with-variable-picker>
+
+            <form-section title="Advanced Settings">
+                <checkbox-input
+                    v-model="variableData.urlEncode"
+                    label="URL encode"
+                />
+                <checkbox-input
+                    v-model="variableData.jsonEncode"
+                    label="JSON encode"
+                />
+                <checkbox-input
+                    :value="variableData.flags %2 === 1"
+                    @input="(value) => {
+                        variableData.flags = (variableData.flags & (~1)) + (value ? 1 : 0);
+                    }"
+                    label="Allow 'Share…'"
+                />
+            </form-section>
+
         </div>
     </div>
 </template>
 
 <script>
+import CheckboxInput from '@/components/form/CheckboxInput.vue';
 import Chevron from '@/components/basic/Chevron.vue';
+import FormSection from '@/components/form/FormSection.vue';
 import Icon from '@/components/basic/Icon.vue';
 import TextInput from '@/components/form/TextInput.vue';
 import WithVariablePicker from '@/components/variables/WithVariablePicker.vue';
@@ -54,7 +75,9 @@ import { VariableType } from '@/model';
 
 export default {
     components: {
+        CheckboxInput,
         Chevron,
+        FormSection,
         Icon,
         TextInput,
         WithVariablePicker,
