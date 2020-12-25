@@ -61,6 +61,13 @@ function validate(data: Base) {
     if (data.categories.some((category) => category.name.length === 0)) {
         throw new ValidationError($t('validation.unnamedCategories'));
     }
+    if (data.variables.some((variable) => variable.key.length === 0)) {
+        throw new ValidationError($t('validation.unnamedVariables'));
+    }
+    const variableKeys = data.variables.map((variable) => variable.key);
+    if (variableKeys.length !== new Set(variableKeys).size) {
+        throw new ValidationError($t('validation.duplicateVariables'));
+    }
     if (data.categories.some(
         (category) => category.shortcuts.some(
             (shortcut) => shortcut.name.length === 0,

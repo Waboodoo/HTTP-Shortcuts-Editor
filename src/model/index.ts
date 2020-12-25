@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
 
-// eslint-disable-next-line import/prefer-default-export
 export enum ExecutionType {
     APP = 'app',
     BROWSER = 'browser',
@@ -252,5 +251,21 @@ export function createNewParameter(parameterType: ParameterType): Parameter {
         key: '',
         value: '',
         fileName: '',
+    };
+}
+
+export function createNewVariable(): Variable {
+    return {
+        id: uuidv4(),
+        type: VariableType.CONSTANT,
+        key: '',
+        value: '',
+        options: null,
+        rememberValue: false,
+        urlEncode: false,
+        jsonEncode: false,
+        data: null,
+        flags: 0,
+        title: '',
     };
 }

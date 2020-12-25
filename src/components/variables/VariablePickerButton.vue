@@ -35,7 +35,7 @@ export default {
                     html: true,
                     animation: 'fade',
                     backdropClose: true,
-                    variables: this.variables,
+                    variables: this.variables.filter((v) => v.key.length > 0),
                 });
                 this.onVariablePicked(choice.data);
             } catch (e) {

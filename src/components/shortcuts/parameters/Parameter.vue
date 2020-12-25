@@ -151,9 +151,6 @@ export default {
             padding: 15px 0
             flex: 1 1 auto
 
-            &__suffix
-                color: #CCCCCC
-
         &__chevron, &__delete-button
             flex: 0 0 auto
             width: 18px

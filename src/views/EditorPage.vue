@@ -17,13 +17,18 @@
             ]">Saving...</span>
         </template>
         <template #main class="editor__main">
+            <div class="editor__main_section-title">Categories</div>
             <category-list
                 :categories="data.categories"
                 :variables="data.variables"
                 @update:categories="onUpdateCategories"
             />
 
-            <!-- TODO: Variables -->
+            <div class="editor__main_section-title">Variables</div>
+            <variable-list
+                :variables="data.variables"
+                @update:variables="onUpdateVariables"
+            />
         </template>
     </page>
 </template>
@@ -35,11 +40,13 @@ import Vue from 'vue';
 import CategoryList from '@/components/categories/CategoryList.vue';
 import Page from '@/views/Page.vue';
 import ValidationError from '@/store/errors/ValidationError';
+import VariableList from '@/components/variables/VariableList.vue';
 
 export default Vue.extend({
     components: {
         CategoryList,
         Page,
+        VariableList,
     },
     computed: {
         ...mapState([
@@ -78,6 +85,12 @@ export default Vue.extend({
             this.setData({
                 ...this.data,
                 categories,
+            });
+        },
+        onUpdateVariables(variables) {
+            this.setData({
+                ...this.data,
+                variables,
             });
         },
         async onSave() {
@@ -127,4 +140,13 @@ export default Vue.extend({
 
             &--visible
                 opacity: 1
+
+    &__main_section-title
+        margin-top: 1.5em
+        margin-bottom: 0.5em
+        font-size: 1.8em
+        font-weight: bold
+
+        &:first-child
+            margin-top: 0
 </style>

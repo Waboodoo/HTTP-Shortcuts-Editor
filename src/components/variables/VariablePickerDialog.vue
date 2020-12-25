@@ -6,9 +6,8 @@
         @option-selected="onVariablePicked"
     >
         <template #empty>
-            You don't have any variables yet.<br><br>
-            Creating variables is currently not possible in this editor.
-            Please create them in the app instead.
+            You don't have any variables yet. Scroll to the bottom of the page to find the
+            button to create variables.
         </template>
     </selection-dialog>
 </template>
