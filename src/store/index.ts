@@ -15,7 +15,8 @@ import i18next from 'i18next';
 
 Vue.use(Vuex);
 
-const REQUIRED_VERSION = 41;
+const REQUIRED_MIN_VERSION = 41;
+const SUPPORTED_MAX_VERSION = 43;
 const LOCAL_STORAGE_DEVICE_ID = 'device_id';
 const API_PATH = 'api/files/';
 
@@ -153,7 +154,7 @@ export default new Vuex.Store({
                     state.password,
                 );
 
-                if (data.version !== REQUIRED_VERSION) {
+                if (data.version < REQUIRED_MIN_VERSION || data.version > SUPPORTED_MAX_VERSION) {
                     throw new ValidationError($t('validation.incompatibleVersion'));
                 }
 
