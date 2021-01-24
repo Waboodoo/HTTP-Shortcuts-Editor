@@ -29,6 +29,13 @@
                 :variables="data.variables"
                 @update:variables="onUpdateVariables"
             />
+
+            <div class="editor__main_section-title">Global Settings</div>
+                <global-settings-form
+                    :base="data"
+                    :variables="data.variables"
+                    @update:base="onUpdateBase"
+                />
         </template>
     </page>
 </template>
@@ -38,6 +45,7 @@ import { mapState, mapActions, mapGetters } from 'vuex';
 
 import Vue from 'vue';
 import CategoryList from '@/components/categories/CategoryList.vue';
+import GlobalSettingsForm from '@/components/global/GlobalSettingsForm.vue';
 import Page from '@/views/Page.vue';
 import ValidationError from '@/store/errors/ValidationError';
 import VariableList from '@/components/variables/VariableList.vue';
@@ -45,6 +53,7 @@ import VariableList from '@/components/variables/VariableList.vue';
 export default Vue.extend({
     components: {
         CategoryList,
+        GlobalSettingsForm,
         Page,
         VariableList,
     },
@@ -91,6 +100,13 @@ export default Vue.extend({
             this.setData({
                 ...this.data,
                 variables,
+            });
+        },
+        onUpdateBase(base) {
+            this.setData({
+                ...this.data,
+                title: base.title,
+                globalCode: base.globalCode,
             });
         },
         async onSave() {

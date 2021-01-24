@@ -34,6 +34,24 @@ export default {
             label: 'Shortcuts',
         },
     },
+    shortcuts: {
+        advancedSettings: {
+            wifiSsid: {
+                label: 'Required Wifi SSID',
+                placeholder: 'Enter the name (SSID) of a wifi network to restrict this shortcut to only be executable while connected to that network.',
+            },
+        },
+    },
+    base: {
+        title: {
+            label: 'Main Toolbar Title',
+            placeholder: 'Enter a custom title for the main toolbar',
+        },
+        globalCode: {
+            label: 'Global Scripting',
+            placeholder: 'Add JavaScript code here to run before the execution of every shortcut, e.g., to initialize variables or define functions that can be used by all shortcuts.',
+        },
+    },
     validation: {
         allCategoriesHidden: 'There must be at least one category which isn\'t hidden.',
         unnamedCategories: 'One or more categories don\'t have a name. Please name them.',

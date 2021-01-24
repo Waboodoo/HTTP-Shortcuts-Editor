@@ -118,6 +118,7 @@ export interface Shortcut {
     proxyPort: number | null;
     parameters: Parameter[];
     headers: Header[];
+    wifiSsid: string;
 }
 
 export interface Category {
@@ -165,6 +166,8 @@ export interface Base {
     categories: Category[];
     version: number;
     variables: Variable[];
+    title: string | null;
+    globalCode: string | null;
 }
 
 export function cloneShortcut(shortcut: Shortcut): Shortcut {
@@ -223,6 +226,7 @@ export function createNewShortcut(type: ExecutionType): Shortcut {
         proxyPort: null,
         parameters: [],
         headers: [],
+        wifiSsid: '',
     };
 }
 
