@@ -350,6 +350,12 @@
                 />
                 <text-input
                     :value="`${shortcutData.timeout}`"
+                    :label="$t('shortcuts.advancedSettings.wifiSsid.label')"
+                    :placeholder="$t('shortcuts.advancedSettings.wifiSsid.placeholder')"
+                    v-model="shortcutData.wifiSsid"
+                />
+                <text-input
+                    :value="`${shortcutData.timeout}`"
                     label="Timeout (in milliseconds)"
                     type="number"
                     min="500"
