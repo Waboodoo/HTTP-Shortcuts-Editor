@@ -14,8 +14,8 @@
                 <p>
                     To use the <b>HTTP&nbsp;Shortcuts&nbsp;Editor</b>, make sure you have the latest
                     version of the <b>HTTP&nbsp;Shortcuts</b> app installed. Open the app, go to
-                    <b>Settings&nbsp;&gt;&nbsp;Edit&nbsp;on&nbsp;Computer</b> and follow the
-                    instructions inside the app.
+                    <b>Import&nbsp;&amp;&nbsp;Export&nbsp;&gt;&nbsp;Edit&nbsp;on&nbsp;Computer</b>
+                    and follow the instructions inside the app.
                 </p>
                 <p>
                     <b>Please note</b> that this editor is in an early development stage and
