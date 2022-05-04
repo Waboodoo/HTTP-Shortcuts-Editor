@@ -26,7 +26,9 @@ export enum AuthenticationMethod {
 }
 
 export enum CategoryLayoutType {
-    GRID = 'grid',
+    DENSE_GRID = 'dense_grid',
+    MEDIUM_GRID = 'medium_grid',
+    WIDE_GRID = 'wide_grid',
     LINEAR_LIST = 'linear_list',
 }
 

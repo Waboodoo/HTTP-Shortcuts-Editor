@@ -27,7 +27,9 @@ export default {
             label: 'Layout Type',
             options: {
                 list: 'List',
-                grid: 'Grid',
+                denseGrid: 'Dense Grid',
+                mediumGrid: 'Medium Grid',
+                wideGrid: 'Wide Grid',
             },
         },
         shortcuts: {

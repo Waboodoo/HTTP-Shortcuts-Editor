@@ -37,7 +37,9 @@
                 :label="$t('categories.layoutType.label')"
                 :options="[
                     { value: 'linear_list', label: $t('categories.layoutType.options.list') },
-                    { value: 'grid', label: $t('categories.layoutType.options.grid') },
+                    { value: 'dense_grid', label: $t('categories.layoutType.options.denseGrid') },
+                    { value: 'medium_grid', label: $t('categories.layoutType.options.mediumGrid') },
+                    { value: 'wide_grid', label: $t('categories.layoutType.options.wideGrid') },
                 ]"
             />
             <labelled :label="$t('categories.shortcuts.label')">
