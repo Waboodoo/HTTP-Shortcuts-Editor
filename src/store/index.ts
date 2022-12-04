@@ -16,7 +16,7 @@ import i18next from 'i18next';
 Vue.use(Vuex);
 
 const REQUIRED_MIN_VERSION = 43;
-const SUPPORTED_MAX_VERSION = 53;
+const SUPPORTED_MAX_VERSION = 54;
 const LOCAL_STORAGE_DEVICE_ID = 'device_id';
 const API_PATH = 'api/files/';
 
