@@ -310,10 +310,6 @@
                     v-model="shortcutData.quickSettingsTileShortcut"
                     label="Allow triggering via Quick Settings Tile"
                 />
-                <checkbox-input
-                    v-model="shortcutData.requireConfirmation"
-                    label="Require confirmation before execution"
-                />
                 <text-input
                     :value="`${shortcutData.delay}`"
                     label="Delay (in milliseconds)"

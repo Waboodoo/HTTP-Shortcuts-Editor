@@ -111,7 +111,6 @@ export interface Shortcut {
     codeOnFailure: string;
     launcherShortcut: boolean;
     quickSettingsTileShortcut: boolean;
-    requireConfirmation: boolean;
     retryPolicy: RetryPolicy;
     followRedirects: boolean;
     acceptCookies: boolean;
@@ -219,7 +218,6 @@ export function createNewShortcut(type: ExecutionType): Shortcut {
         codeOnFailure: '',
         launcherShortcut: false,
         quickSettingsTileShortcut: false,
-        requireConfirmation: false,
         retryPolicy: RetryPolicy.NONE,
         followRedirects: true,
         acceptCookies: true,
