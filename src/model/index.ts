@@ -154,7 +154,7 @@ export interface Variable {
     key: string;
     type: VariableType;
     value: string | null;
-    options: VariableOption[] | null;
+    options: VariableOption[];
     rememberValue: boolean;
     urlEncode: boolean;
     jsonEncode: boolean;
@@ -264,7 +264,7 @@ export function createNewVariable(): Variable {
         type: VariableType.CONSTANT,
         key: '',
         value: '',
-        options: null,
+        options: [],
         rememberValue: false,
         urlEncode: false,
         jsonEncode: false,
